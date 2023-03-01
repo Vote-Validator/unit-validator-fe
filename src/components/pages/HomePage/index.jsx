@@ -24,6 +24,7 @@ import { getLocalGovernmentsAsync } from "../../../store/features/localGovernmen
 import { pollingUnitsAsync } from "../../../store/features/pollingUnit";
 import { RadioInput } from "../../atoms/RadioInput";
 import { CustomScrollBar } from "../../atoms/CustomScrollBar";
+import { Loader } from "../../atoms/Loader";
 
 export const partiesInfo = [
   {
@@ -94,6 +95,7 @@ const FormImage = styled.img`
   width: 100%;
 `;
 const PartiesInputSection = styled.section`
+  min-height: 60px;
   max-height: 60vh;
   overflow: auto;
   padding-right: 6px;
@@ -208,25 +210,32 @@ export const HomePage = () => {
       <ContentWrapper>
         <RightContent width="70%">
           {isLoading ? (
-            <div>Loading</div>
+            <Loader type="circle" />
           ) : isError ? (
-            <div>An error occured while fetching data</div>
+            <div>An error occured while fetching image</div>
           ) : (
             initialData && <FormImage src={initialData.data.image.url} />
           )}
         </RightContent>
         <LeftContent width="30%" direction="column">
           <PartiesInputSection>
-            {pollValues.map((data, idx) => (
-              <VoteInput
-                type="number"
-                key={idx}
-                name={data.id}
-                partyData={data}
-                value={data.score}
-                onChange={handleInputChange}
-              />
-            ))}
+            {isLoading ? (
+              <Loader type="circle" />
+            ) : isError ? (
+              <div>An error occured while fetching party data</div>
+            ) : (
+              initialData &&
+              pollValues.map((data, idx) => (
+                <VoteInput
+                  type="number"
+                  key={idx}
+                  name={data.id}
+                  partyData={data}
+                  value={data.score}
+                  onChange={handleInputChange}
+                />
+              ))
+            )}
           </PartiesInputSection>
 
           <p>Do you think this form has been tampered with?</p>
