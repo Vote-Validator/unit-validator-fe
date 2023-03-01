@@ -39,8 +39,8 @@ from,
   }
 `;
 const CircleLoader = styled.div`
-  width: 18px;
-  height: 18px;
+  width: ${({ width }) => width || "18px"};
+  height: ${({ height }) => height || "18px"};
   border: 2px solid #147b5c;
   border-bottom-color: transparent;
   border-radius: 50%;
@@ -51,9 +51,9 @@ const CircleLoader = styled.div`
   animation: ${circleLoaderAnimation} 2s ease-in-out infinite;
 `;
 
-export const Loader = ({ type }) => {
-  if (type === "circle") {
-    return <CircleLoader />;
+export const Loader = (props) => {
+  if (props.type === "circle") {
+    return <CircleLoader {...props} />;
   }
 
   return (

@@ -74,6 +74,8 @@ const RightContent = styled(Flex)`
   width: 70%;
   padding: 0 1.5em;
   border-right: 1px solid #e5e2ed;
+  justify-content: center;
+  align-items: center;
 
   @media only screen and (${screen.sm}) {
     padding: 30px 0;
@@ -102,7 +104,9 @@ const PartiesInputSection = styled.section`
 
   ${CustomScrollBar};
 `;
-
+const ErrrorText = styled.p`
+  color: red;
+`;
 export const fetchInitialData = async () => {
   const response = await apiService("/api/v1/transcribe", "GET");
   return response.data;
@@ -210,9 +214,9 @@ export const HomePage = () => {
       <ContentWrapper>
         <RightContent width="70%">
           {isLoading ? (
-            <Loader type="circle" />
+            <Loader type="circle" width="50px" height="50px" />
           ) : isError ? (
-            <div>An error occured while fetching image</div>
+            <ErrrorText>An error occured while fetching image</ErrrorText>
           ) : (
             initialData && <FormImage src={initialData.data.image.url} />
           )}
@@ -220,9 +224,13 @@ export const HomePage = () => {
         <LeftContent width="30%" direction="column">
           <PartiesInputSection>
             {isLoading ? (
-              <Loader type="circle" />
+              <Flex justifyContent="center">
+                <Loader type="circle" width="40px" height="40px" />
+              </Flex>
             ) : isError ? (
-              <div>An error occured while fetching party data</div>
+              <ErrrorText>
+                An error occured while fetching party data
+              </ErrrorText>
             ) : (
               initialData &&
               pollValues.map((data, idx) => (
