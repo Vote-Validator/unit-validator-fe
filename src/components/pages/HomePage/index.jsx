@@ -24,6 +24,7 @@ import { getLocalGovernmentsAsync } from "../../../store/features/localGovernmen
 import { pollingUnitsAsync } from "../../../store/features/pollingUnit";
 import { RadioInput } from "../../atoms/RadioInput";
 import { CustomScrollBar } from "../../atoms/CustomScrollBar";
+import { Loader } from "../../atoms/Loader";
 
 export const partiesInfo = [
   {
@@ -73,6 +74,8 @@ const RightContent = styled(Flex)`
   width: 70%;
   padding: 0 1.5em;
   border-right: 1px solid #e5e2ed;
+  justify-content: center;
+  align-items: center;
 
   @media only screen and (${screen.sm}) {
     padding: 30px 0;
@@ -94,13 +97,16 @@ const FormImage = styled.img`
   width: 100%;
 `;
 const PartiesInputSection = styled.section`
+  min-height: 60px;
   max-height: 60vh;
   overflow: auto;
   padding-right: 6px;
 
   ${CustomScrollBar};
 `;
-
+const ErrrorText = styled.p`
+  color: red;
+`;
 export const fetchInitialData = async () => {
   const response = await apiService("/api/v1/transcribe", "GET");
   return response.data;
@@ -199,29 +205,45 @@ export const HomePage = () => {
     };
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  // if (isLoading) return <div>Loading...</div>;
 
-  if (isError) return <p>An error occured while fetching data.</p>;
+  // if (isError) return <p>An error occured while fetching data.</p>;
 
   return (
     <HomeTemplate header={<Header />} footer={<Footer />}>
-      {console.log("url", initialData.data.image.url)}
       <ContentWrapper>
         <RightContent width="70%">
-          {initialData && <FormImage src={initialData.data.image.url} />}
+          {isLoading ? (
+            <Loader type="circle" width="50px" height="50px" />
+          ) : isError ? (
+            <ErrrorText>An error occured while fetching image</ErrrorText>
+          ) : (
+            initialData && <FormImage src={initialData.data.image.url} />
+          )}
         </RightContent>
         <LeftContent width="30%" direction="column">
           <PartiesInputSection>
-            {pollValues.map((data, idx) => (
-              <VoteInput
-                type="number"
-                key={idx}
-                name={data.id}
-                partyData={data}
-                value={data.score}
-                onChange={handleInputChange}
-              />
-            ))}
+            {isLoading ? (
+              <Flex justifyContent="center">
+                <Loader type="circle" width="40px" height="40px" />
+              </Flex>
+            ) : isError ? (
+              <ErrrorText>
+                An error occured while fetching party data
+              </ErrrorText>
+            ) : (
+              initialData &&
+              pollValues.map((data, idx) => (
+                <VoteInput
+                  type="number"
+                  key={idx}
+                  name={data.id}
+                  partyData={data}
+                  value={data.score}
+                  onChange={handleInputChange}
+                />
+              ))
+            )}
           </PartiesInputSection>
 
           <p>Do you think this form has been tampered with?</p>
