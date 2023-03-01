@@ -19,13 +19,18 @@ export const StatisticsPage = () => {
     fetchResultsData(stateId)
   );
 
-  if (isError) return <p>An error occured while fetching data.</p>;
   return (
     <StatisticsTemplate header={<NavBar />} footer={<Footer />}>
       <h4 style={{ color: "#147B5C", margin: "6px 0 16px 0" }}>
         Current Results
       </h4>
-      {isLoading ? <Loader /> : <BarChart chartData={data} />}
+      {isLoading ? (
+        <Loader />
+      ) : isError ? (
+        <p style={{ color: "red" }}>An error occured while fetching data.</p>
+      ) : (
+        <BarChart chartData={data} />
+      )}
     </StatisticsTemplate>
   );
 };
