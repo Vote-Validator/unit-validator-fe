@@ -6,6 +6,7 @@ import BarChart from "../../molecules/Chart";
 import apiService from "../../../api-utils/api-service";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { Loader } from "../../atoms/Loader";
 
 const fetchResultsData = async (stateId) => {
   const response = await apiService(`/api/v1/results/states/${stateId}`, "GET");
@@ -24,7 +25,7 @@ export const StatisticsPage = () => {
       <h4 style={{ color: "#147B5C", margin: "6px 0 16px 0" }}>
         Current Results
       </h4>
-      {isLoading ? "Loading..." : <BarChart chartData={data} />}
+      {isLoading ? <Loader /> : <BarChart chartData={data} />}
     </StatisticsTemplate>
   );
 };
