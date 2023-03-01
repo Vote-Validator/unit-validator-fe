@@ -4,6 +4,7 @@ import styled from "styled-components";
 const ButtonWrapper = styled.button`
   padding: 10px;
   border-radius: 0;
+  cursor: pointer;
   padding: 10px 20px;
   color: ${({ color }) => color};
   background-color: ${({ bgColor }) => bgColor};
