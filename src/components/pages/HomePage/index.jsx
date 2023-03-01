@@ -199,16 +199,21 @@ export const HomePage = () => {
     };
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  // if (isLoading) return <div>Loading...</div>;
 
-  if (isError) return <p>An error occured while fetching data.</p>;
+  // if (isError) return <p>An error occured while fetching data.</p>;
 
   return (
     <HomeTemplate header={<Header />} footer={<Footer />}>
-      {console.log("url", initialData.data.image.url)}
       <ContentWrapper>
         <RightContent width="70%">
-          {initialData && <FormImage src={initialData.data.image.url} />}
+          {isLoading ? (
+            <div>Loading</div>
+          ) : isError ? (
+            <div>An error occured while fetching data</div>
+          ) : (
+            initialData && <FormImage src={initialData.data.image.url} />
+          )}
         </RightContent>
         <LeftContent width="30%" direction="column">
           <PartiesInputSection>
