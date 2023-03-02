@@ -70,17 +70,6 @@ const PartiesInputSection = styled.section`
 
   ${CustomScrollBar};
 `;
-// const serializePartyInfoForSubmission = (parties) => {
-//   const newPartyData = [...parties];
-//   return newPartyData?.map((party) => {
-//     delete party.name;
-//     delete party.icon;
-
-//     return {
-//       ...party,
-//     };
-//   });
-// };
 const addScoreKeyToPartyInfo = (parties) => {
   const newParties = [...parties];
   return newParties?.map((party) => {
@@ -90,10 +79,6 @@ const addScoreKeyToPartyInfo = (parties) => {
     };
   });
 };
-
-// const ErrrorText = styled.p`
-//   color: red;
-// `;
 
 export const FormSection = ({ data }) => {
   const [state, setState] = useState("");

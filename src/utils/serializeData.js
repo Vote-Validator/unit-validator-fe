@@ -9,6 +9,7 @@ export const serializePartiesDataForSubmission = (data) => {
     const newParty = { ...party };
     delete newParty.name;
     delete newParty.icon;
+    newParty.score = +newParty.score;
 
     return newParty;
   });
