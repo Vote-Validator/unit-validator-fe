@@ -5,7 +5,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { getLocalGovernmentsAsync } from "../../../store/features/localGovernment";
 import { pollingUnitsAsync } from "../../../store/features/pollingUnit";
-import { Flex } from "../../atoms";
+import { CheckBox, Flex } from "../../atoms";
 // import { Loader } from "../../atoms/Loader";
 import { VoteInput } from "../../molecules/VoteInput";
 import { RadioInput } from "../../atoms/RadioInput";
@@ -27,6 +27,7 @@ import nnpcImg from "../../../assets/svgs/nnpp.svg";
 import { storeTranscribedDataAsync } from "../../../store/features/transcribe";
 import { toast } from "react-toastify";
 import { ComboBox } from "../../molecules";
+import { ProgressBar } from "../../atoms/ProgressBar";
 
 export const partiesInfo = [
   {
@@ -89,6 +90,7 @@ export const FormSection = ({ data }) => {
   // const [state, setState] = useState("");
   // const [lga, setLGA] = useState("");
   // const [pollingUnit, setPollingUnit] = useState("");
+  const [isPresidentialForm, setIsPresidentialForm] = useState(false);
   const [state, setState] = useState(null);
   const [lga, setLGA] = useState(null);
   const [pollingUnit, setPollingUnit] = useState(null);
@@ -148,6 +150,10 @@ export const FormSection = ({ data }) => {
     setIsFormCorrect(e.target.value);
   };
 
+  const handleIsPresidentialForm = (e) => {
+    setIsPresidentialForm(e.target.value);
+  };
+
   const prepareSubmissionData = async () => {
     if (!state) {
       toast.error("Please select state");
@@ -187,6 +193,7 @@ export const FormSection = ({ data }) => {
 
   return (
     <>
+      <ProgressBar value={170} total={350} />
       <PartiesInputSection>
         {pollValues.map((data, idx) => (
           <VoteInput
@@ -201,22 +208,32 @@ export const FormSection = ({ data }) => {
         ))}
       </PartiesInputSection>
 
-      <p>Do you think this form has been tampered with?</p>
+      <section style={{ margin: "30px 0 10px 0" }}>
+        <p style={{ fontWeight: 500 }}>
+          Do you think this form has been tampered with?
+        </p>
 
-      <div>
-        <RadioInput
-          name="form_correctness"
-          label="Yes, there are corrections on this form"
-          value={true}
-          onChange={handleIsFormCorrect}
-        />
-        <RadioInput
-          name="form_correctness"
-          label="No, the form is intact"
-          value={false}
-          onChange={handleIsFormCorrect}
-        />
-      </div>
+        <div>
+          <RadioInput
+            name="form_correctness"
+            label="Yes, there are corrections on this form"
+            value={true}
+            onChange={handleIsFormCorrect}
+          />
+          <RadioInput
+            name="form_correctness"
+            label="No, the form is intact"
+            value={false}
+            onChange={handleIsFormCorrect}
+          />
+          <CheckBox
+            name="isPresidentialForm"
+            label="This is not a Presidential form"
+            value={isPresidentialForm}
+            onChange={handleIsPresidentialForm}
+          />
+        </div>
+      </section>
 
       <section>
         <h3>Registration Area</h3>
