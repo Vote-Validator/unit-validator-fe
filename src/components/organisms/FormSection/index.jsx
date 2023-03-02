@@ -9,7 +9,7 @@ import { Flex } from "../../atoms";
 // import { Loader } from "../../atoms/Loader";
 import { VoteInput } from "../../molecules/VoteInput";
 import { RadioInput } from "../../atoms/RadioInput";
-import { DropDownInput } from "../../molecules/DropdownInput";
+// import { DropDownInput } from "../../molecules/DropdownInput";
 import {
   serializePartiesDataForSubmission,
   serializeStatesData,
@@ -24,6 +24,7 @@ import lpImg from "../../../assets/svgs/lp.svg";
 import nnpcImg from "../../../assets/svgs/nnpp.svg";
 import { storeTranscribedDataAsync } from "../../../store/features/transcribe";
 import { toast } from "react-toastify";
+import { ComboBox } from "../../molecules";
 
 export const partiesInfo = [
   {
@@ -83,9 +84,12 @@ const addScoreKeyToPartyInfo = (parties) => {
 };
 
 export const FormSection = ({ data }) => {
-  const [state, setState] = useState("");
-  const [lga, setLGA] = useState("");
-  const [pollingUnit, setPollingUnit] = useState("");
+  // const [state, setState] = useState("");
+  // const [lga, setLGA] = useState("");
+  // const [pollingUnit, setPollingUnit] = useState("");
+  const [state, setState] = useState(null);
+  const [lga, setLGA] = useState(null);
+  const [pollingUnit, setPollingUnit] = useState(null);
   const [isFormCorrect, setIsFormCorrect] = useState(null);
   const [pollValues, setPollValues] = useState(
     addScoreKeyToPartyInfo(data.parties)
@@ -97,12 +101,8 @@ export const FormSection = ({ data }) => {
 
   const dispatch = useDispatch();
 
-  const resetFormInput = () => {
-    setState("");
-    setLGA("");
-    setPollingUnit("");
-    setIsFormCorrect(null);
-    setPollValues(addScoreKeyToPartyInfo(data.parties));
+  const reloadPage = () => {
+    window.location.reload(false);
   };
 
   const handleInputChange = (e) => {
@@ -116,24 +116,24 @@ export const FormSection = ({ data }) => {
     });
   };
 
-  const handleStateChange = async (e) => {
-    setState(e.target.value);
-    const result = await dispatch(getLocalGovernmentsAsync(e.target.value));
+  const handleStateChange = async (e, newValue) => {
+    setState(newValue);
+    const result = await dispatch(getLocalGovernmentsAsync(newValue.id));
     if (result.payload) {
       setLocalGovernments(result.payload);
     }
   };
 
-  const handleLGAChange = async (e) => {
-    setLGA(e.target.value);
-    const result = await dispatch(pollingUnitsAsync(e.target.value));
+  const handleLGAChange = async (e, newValue) => {
+    setLGA(newValue);
+    const result = await dispatch(pollingUnitsAsync(newValue.id));
     if (result.payload) {
       setPollingUnits(result.payload);
     }
   };
 
-  const handlePollingUnitChange = async (e) => {
-    setPollingUnit(e.target.value);
+  const handlePollingUnitChange = async (e, newValue) => {
+    setPollingUnit(newValue);
   };
 
   const invalidateQuery = () => {
@@ -157,7 +157,7 @@ export const FormSection = ({ data }) => {
       toast.error("Please let us know if the form is intact or not");
     } else {
       const transcriptionData = {
-        polling_unit_id: pollingUnit,
+        polling_unit_id: pollingUnit.id,
         image_id: data.image.id,
         has_corrections:
           isFormCorrect === "true" || isFormCorrect === true ? true : false,
@@ -170,7 +170,7 @@ export const FormSection = ({ data }) => {
       );
       if (response.payload) {
         toast.success("Data submitted successfully");
-        resetFormInput();
+        reloadPage();
       } else {
         toast.error("An error occured!");
       }
@@ -213,15 +213,23 @@ export const FormSection = ({ data }) => {
       <section>
         <h3>Registration Area</h3>
 
-        <DroopdownWrapper>
+        {/* <DroopdownWrapper>
           <DropDownInput
             options={data ? serializeStatesData(data.states) : []}
             label="Select state"
             value={state}
             onChange={handleStateChange}
           />
-        </DroopdownWrapper>
+        </DroopdownWrapper> */}
         <DroopdownWrapper>
+          <ComboBox
+            data={data ? serializeStatesData(data.states) : []}
+            label="Select state"
+            value={state}
+            onChange={handleStateChange}
+          />
+        </DroopdownWrapper>
+        {/* <DroopdownWrapper>
           <DropDownInput
             options={
               localGovernments.length
@@ -232,13 +240,33 @@ export const FormSection = ({ data }) => {
             value={lga}
             onChange={handleLGAChange}
           />
+        </DroopdownWrapper> */}
+        <DroopdownWrapper>
+          <ComboBox
+            data={
+              localGovernments.length
+                ? serializeStatesData(localGovernments)
+                : []
+            }
+            label="Select LGA"
+            value={lga}
+            onChange={handleLGAChange}
+          />
         </DroopdownWrapper>
 
-        <DroopdownWrapper>
+        {/* <DroopdownWrapper>
           <DropDownInput
             options={
               pollingUnits.length ? serializeStatesData(pollingUnits) : []
             }
+            label="Identify polling unit"
+            value={pollingUnit}
+            onChange={handlePollingUnitChange}
+          />
+        </DroopdownWrapper> */}
+        <DroopdownWrapper>
+          <ComboBox
+            data={pollingUnits.length ? serializeStatesData(pollingUnits) : []}
             label="Identify polling unit"
             value={pollingUnit}
             onChange={handlePollingUnitChange}
