@@ -7,7 +7,7 @@ const ProgressBarContainer = styled.div`
   width: 25%;
   position: absolute;
   right: 10px;
-  top: 14px;
+  top: 11px;
 `;
 export const Header = () => {
   return (

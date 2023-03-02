@@ -6,6 +6,7 @@ const ProgressWrapper = styled.div`
   margin: 16px 0;
   border-radius: 50px;
   width: 100%;
+  position: relative;
 `;
 const ProgressElement = styled.div`
   width: ${({ width }) => width};
@@ -16,12 +17,13 @@ const ProgressElement = styled.div`
 `;
 const StatusValueText = styled.p`
   position: absolute;
-  right: 5px;
-  top: -8.5px;
+  right: ${({ right }) => right || "5px"};
+  left: ${({ left }) => left};
+  top: ${({ top }) => top || "-8.5px"};
   font-weight: bold;
   font-style: italic;
   font-size: 0.65rem;
-  color: white;
+  color: ${({ color }) => color || "#147B5C"};
 `;
 
 export const ProgressBar = ({ value, total }) => {
@@ -32,8 +34,14 @@ export const ProgressBar = ({ value, total }) => {
       : percentageOfCompletion.toFixed(1);
   return (
     <ProgressWrapper>
+      <StatusValueText top="7px" color="black">
+        {total - value} to go
+      </StatusValueText>
       <ProgressElement width={`${displayFigure}%`}>
-        <StatusValueText>{displayFigure}%</StatusValueText>
+        <StatusValueText color="#ffffff">{displayFigure}%</StatusValueText>
+        <StatusValueText top="-24px" color="black">
+          {value} validated
+        </StatusValueText>
       </ProgressElement>
     </ProgressWrapper>
   );
