@@ -8,7 +8,7 @@ const router = createBrowserRouter([
     element: <HomePage />,
   },
   {
-    path: "statistics",
+    path: "statistics/:stateId",
     element: <StatisticsPage />,
   },
 ]);
