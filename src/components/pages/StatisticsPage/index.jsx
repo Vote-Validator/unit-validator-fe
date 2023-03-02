@@ -10,7 +10,8 @@ import { Loader } from "../../atoms/Loader";
 
 const fetchResultsData = async (stateId) => {
   const response = await apiService(`/api/v1/results/states/${stateId}`, "GET");
-  return response.data?.results;
+  console.log(response.data.data.results);
+  return response?.data?.data?.results;
 };
 
 export const StatisticsPage = () => {

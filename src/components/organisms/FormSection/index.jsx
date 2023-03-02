@@ -22,6 +22,8 @@ import adpImg from "../../../assets/svgs/adp.svg";
 import apgaImg from "../../../assets/svgs/apga.svg";
 import lpImg from "../../../assets/svgs/lp.svg";
 import nnpcImg from "../../../assets/svgs/nnpp.svg";
+import { storeTranscribedDataAsync } from "../../../store/features/transcribe";
+import { toast } from "react-toastify";
 
 export const partiesInfo = [
   {
@@ -84,7 +86,7 @@ export const FormSection = ({ data }) => {
   const [state, setState] = useState("");
   const [lga, setLGA] = useState("");
   const [pollingUnit, setPollingUnit] = useState("");
-  const [isFormCorrect, setIsFormCorrect] = useState(true);
+  const [isFormCorrect, setIsFormCorrect] = useState(null);
   const [pollValues, setPollValues] = useState(
     addScoreKeyToPartyInfo(data.parties)
   );
@@ -136,21 +138,34 @@ export const FormSection = ({ data }) => {
     setIsFormCorrect(e.target.value);
   };
 
-  const prepareSubmissionData = () => {
-    console.log({
-      polling_unit_id: pollingUnit,
-      image_id: data.image.id,
-      has_corrections: isFormCorrect,
-      is_unclear: false,
-      parties: serializePartiesDataForSubmission(pollValues),
-    });
-    return {
-      polling_unit_id: pollingUnit,
-      image_id: data.image.id,
-      has_corrections: isFormCorrect,
-      is_unclear: false,
-      parties: serializePartiesDataForSubmission(pollValues),
-    };
+  const prepareSubmissionData = async () => {
+    if (!state) {
+      toast.error("Please select state");
+    } else if (!lga) {
+      toast.error("Please select LGA");
+    } else if (!pollingUnit) {
+      toast.error("Please select polling unit");
+    } else if (isFormCorrect === null) {
+      toast.error("Please let us know if the form is intact or not");
+    } else {
+      const transcriptionData = {
+        polling_unit_id: pollingUnit,
+        image_id: data.image.id,
+        has_corrections:
+          isFormCorrect === "true" || isFormCorrect === true ? true : false,
+        is_unclear: false,
+        parties: serializePartiesDataForSubmission(pollValues),
+      };
+
+      const response = await dispatch(
+        storeTranscribedDataAsync(transcriptionData)
+      );
+      if (response.payload) {
+        toast.success("Data submitted successfully");
+      } else {
+        toast.error("An error occured!");
+      }
+    }
   };
 
   return (
