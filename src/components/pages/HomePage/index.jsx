@@ -9,6 +9,7 @@ import { screen } from "../../theme/utils";
 import apiService from "../../../api-utils/api-service";
 import { useQuery } from "@tanstack/react-query";
 import { Loader } from "../../atoms/Loader";
+import ReactPanZoom from "react-image-pan-zoom-rotate";
 
 const ContentWrapper = styled(Flex)`
   padding: 30px;
@@ -38,8 +39,11 @@ const LeftContent = styled(Flex)`
     width: 100%;
   }
 `;
-const FormImage = styled.img`
+const ImageWrapper = styled.div`
   width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
 `;
 const ErrorAndLoaderWrapper = styled(Flex)`
   justify-content: center;
@@ -83,7 +87,11 @@ export const HomePage = () => {
               <ErrrorText>An error occured while fetching image</ErrrorText>
             </ErrorAndLoaderWrapper>
           ) : (
-            initialData && <FormImage src={initialData.data.image.url} />
+            initialData && (
+              <ImageWrapper>
+                <ReactPanZoom image={initialData.data.image.url} />
+              </ImageWrapper>
+            )
           )}
         </RightContent>
         <LeftContent width="30%" direction="column">
