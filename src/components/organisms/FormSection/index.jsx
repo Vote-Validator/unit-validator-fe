@@ -10,7 +10,10 @@ import { Flex } from "../../atoms";
 import { VoteInput } from "../../molecules/VoteInput";
 import { RadioInput } from "../../atoms/RadioInput";
 import { DropDownInput } from "../../molecules/DropdownInput";
-import { serializeStatesData } from "../../../utils/serializeData";
+import {
+  serializePartiesDataForSubmission,
+  serializeStatesData,
+} from "../../../utils/serializeData";
 import { Button } from "../../atoms/Button";
 
 import pdpImg from "../../../assets/svgs/pdp.svg";
@@ -67,18 +70,17 @@ const PartiesInputSection = styled.section`
 
   ${CustomScrollBar};
 `;
-const serializePartyInfoForSubmission = (parties) => {
-  const newPartyData = [...parties];
-  return newPartyData?.map((party) => {
-    delete party.name;
-    delete party.icon;
+// const serializePartyInfoForSubmission = (parties) => {
+//   const newPartyData = [...parties];
+//   return newPartyData?.map((party) => {
+//     delete party.name;
+//     delete party.icon;
 
-    return {
-      ...party,
-      score: "",
-    };
-  });
-};
+//     return {
+//       ...party,
+//     };
+//   });
+// };
 const addScoreKeyToPartyInfo = (parties) => {
   const newParties = [...parties];
   return newParties?.map((party) => {
@@ -153,20 +155,20 @@ export const FormSection = ({ data }) => {
     setFormCorrectness(true);
   };
 
-  const prepareSubmissionData = (formCorrectness, pollingUnit, pollValues) => {
-    console.log("submission data", {
+  const prepareSubmissionData = () => {
+    console.log({
       polling_unit_id: pollingUnit,
-      image_id: 4,
+      image_id: data.image.id,
       has_corrections: formCorrectness,
       is_unclear: false,
-      parties: [...pollValues],
+      parties: serializePartiesDataForSubmission(pollValues),
     });
     return {
       polling_unit_id: pollingUnit,
       image_id: data.image.id,
       has_corrections: formCorrectness,
       is_unclear: false,
-      parties: serializePartyInfoForSubmission([...data.parties]),
+      parties: serializePartiesDataForSubmission(pollValues),
     };
   };
 
@@ -241,13 +243,7 @@ export const FormSection = ({ data }) => {
 
       <Flex justifyContent="space-between">
         <Button onClick={invalidateQuery} color="red" text="Unclear Image" />
-        <Button
-          onClick={() =>
-            prepareSubmissionData(formCorrectness, pollingUnit, pollValues)
-          }
-          color="black"
-          text="SUBMIT"
-        />
+        <Button onClick={prepareSubmissionData} color="black" text="SUBMIT" />
       </Flex>
     </>
   );
