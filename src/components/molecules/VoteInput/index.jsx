@@ -27,17 +27,16 @@ const Logo = styled.img`
   margin-right: 10px;
 `;
 
-export const VoteInput = ({ name, partyData, type, value, onChange }) => {
+export const VoteInput = ({ name, partyName, icon, type, value, onChange }) => {
   return (
     <Flex margin="0 0 10px 0">
-      <Label htmlFor={partyData.name}>
-        <Logo src={partyData.img} alt={`${partyData.name}-logo`} />{" "}
-        {partyData.name}
+      <Label htmlFor={name}>
+        <Logo src={icon} alt={`${partyName}-logo`} /> {partyName}
       </Label>
       <Input
         type={type}
         name={name}
-        id={partyData.name}
+        id={name}
         value={value}
         onChange={onChange}
       />
