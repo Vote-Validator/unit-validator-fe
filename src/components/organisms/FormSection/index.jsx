@@ -11,7 +11,9 @@ import { VoteInput } from "../../molecules/VoteInput";
 import { RadioInput } from "../../atoms/RadioInput";
 // import { DropDownInput } from "../../molecules/DropdownInput";
 import {
+  serializeLGAData,
   serializePartiesDataForSubmission,
+  serializePollingUnitData,
   serializeStatesData,
 } from "../../../utils/serializeData";
 import { Button } from "../../atoms/Button";
@@ -250,9 +252,7 @@ export const FormSection = ({ data }) => {
         <DroopdownWrapper>
           <ComboBox
             data={
-              localGovernments.length
-                ? serializeStatesData(localGovernments)
-                : []
+              localGovernments.length ? serializeLGAData(localGovernments) : []
             }
             label="Select LGA"
             value={lga}
@@ -272,7 +272,9 @@ export const FormSection = ({ data }) => {
         </DroopdownWrapper> */}
         <DroopdownWrapper>
           <ComboBox
-            data={pollingUnits.length ? serializeStatesData(pollingUnits) : []}
+            data={
+              pollingUnits.length ? serializePollingUnitData(pollingUnits) : []
+            }
             label="Identify polling unit"
             value={pollingUnit}
             onChange={handlePollingUnitChange}
