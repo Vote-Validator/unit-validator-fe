@@ -1,17 +1,18 @@
 import styled from "styled-components";
 import { CustomScrollBar } from "../../atoms/CustomScrollBar";
 import { useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { getLocalGovernmentsAsync } from "../../../store/features/localGovernment";
 import { pollingUnitsAsync } from "../../../store/features/pollingUnit";
-import { Flex } from "../../atoms";
+import { CheckBox, Flex } from "../../atoms";
 // import { Loader } from "../../atoms/Loader";
 import { VoteInput } from "../../molecules/VoteInput";
 import { RadioInput } from "../../atoms/RadioInput";
 // import { DropDownInput } from "../../molecules/DropdownInput";
 import {
+  serializeLGAData,
   serializePartiesDataForSubmission,
+  serializePollingUnitData,
   serializeStatesData,
 } from "../../../utils/serializeData";
 import { Button } from "../../atoms/Button";
@@ -87,6 +88,8 @@ export const FormSection = ({ data }) => {
   // const [state, setState] = useState("");
   // const [lga, setLGA] = useState("");
   // const [pollingUnit, setPollingUnit] = useState("");
+  const [isPresidentialForm, setIsPresidentialForm] = useState(false);
+  const [isImageClear, setIsImageClear] = useState(false);
   const [state, setState] = useState(null);
   const [lga, setLGA] = useState(null);
   const [pollingUnit, setPollingUnit] = useState(null);
@@ -97,7 +100,6 @@ export const FormSection = ({ data }) => {
 
   const [localGovernments, setLocalGovernments] = useState([]);
   const [pollingUnits, setPollingUnits] = useState([]);
-  const QueryClient = useQueryClient();
 
   const dispatch = useDispatch();
 
@@ -136,14 +138,16 @@ export const FormSection = ({ data }) => {
     setPollingUnit(newValue);
   };
 
-  const invalidateQuery = () => {
-    QueryClient.invalidateQueries("transcribe", {
-      exact: true,
-    });
-  };
-
   const handleIsFormCorrect = (e) => {
     setIsFormCorrect(e.target.value);
+  };
+
+  const handleIsPresidentialForm = (e) => {
+    setIsPresidentialForm(e.target.value);
+  };
+
+  const handleIsImageClear = (e) => {
+    setIsImageClear(e.target.value);
   };
 
   const prepareSubmissionData = async () => {
@@ -199,22 +203,38 @@ export const FormSection = ({ data }) => {
         ))}
       </PartiesInputSection>
 
-      <p>Do you think this form has been tampered with?</p>
+      <section style={{ margin: "30px 0 10px 0" }}>
+        <p style={{ fontWeight: 500 }}>
+          Do you think this form has been tampered with?
+        </p>
 
-      <div>
-        <RadioInput
-          name="form_correctness"
-          label="Yes, there are corrections on this form"
-          value={true}
-          onChange={handleIsFormCorrect}
-        />
-        <RadioInput
-          name="form_correctness"
-          label="No, the form is intact"
-          value={false}
-          onChange={handleIsFormCorrect}
-        />
-      </div>
+        <div>
+          <RadioInput
+            name="form_correctness"
+            label="Yes, there are corrections on this form"
+            value={true}
+            onChange={handleIsFormCorrect}
+          />
+          <RadioInput
+            name="form_correctness"
+            label="No, the form is intact"
+            value={false}
+            onChange={handleIsFormCorrect}
+          />
+          <CheckBox
+            name="isPresidentialForm"
+            label="This is not a Presidential form"
+            value={isPresidentialForm}
+            onChange={handleIsPresidentialForm}
+          />
+          <CheckBox
+            name="isImageClear"
+            label="This is not a Presidential form"
+            value={isImageClear}
+            onChange={handleIsImageClear}
+          />
+        </div>
+      </section>
 
       <section>
         <h3>Registration Area</h3>
@@ -250,9 +270,7 @@ export const FormSection = ({ data }) => {
         <DroopdownWrapper>
           <ComboBox
             data={
-              localGovernments.length
-                ? serializeStatesData(localGovernments)
-                : []
+              localGovernments.length ? serializeLGAData(localGovernments) : []
             }
             label="Select LGA"
             value={lga}
@@ -272,7 +290,9 @@ export const FormSection = ({ data }) => {
         </DroopdownWrapper> */}
         <DroopdownWrapper>
           <ComboBox
-            data={pollingUnits.length ? serializeStatesData(pollingUnits) : []}
+            data={
+              pollingUnits.length ? serializePollingUnitData(pollingUnits) : []
+            }
             label="Identify polling unit"
             value={pollingUnit}
             onChange={handlePollingUnitChange}
@@ -280,9 +300,15 @@ export const FormSection = ({ data }) => {
         </DroopdownWrapper>
       </section>
 
-      <Flex justifyContent="space-between">
-        <Button onClick={invalidateQuery} color="red" text="Unclear Image" />
-        <Button onClick={prepareSubmissionData} color="black" text="SUBMIT" />
+      <Flex justifyContent="center">
+        <Button
+          onClick={prepareSubmissionData}
+          borderColor="#C8C8C8"
+          backgroundColor="#C8C8C8"
+          color="#ffffff"
+          text="SUBMIT"
+          margin="16px 0 0 0"
+        />
       </Flex>
     </>
   );

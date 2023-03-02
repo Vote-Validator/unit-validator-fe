@@ -75,7 +75,10 @@ export const HomePage = () => {
   });
 
   return (
-    <HomeTemplate header={<Header />} footer={<Footer />}>
+    <HomeTemplate
+      header={<Header stats={{ data: initialData, isLoading, isError }} />}
+      footer={<Footer />}
+    >
       <ContentWrapper>
         <RightContent width="70%">
           {isLoading ? (
@@ -110,7 +113,7 @@ export const HomePage = () => {
           )}
         </LeftContent>
       </ContentWrapper>
-      <ShowResults />
+      <ShowResults stats={{ data: initialData, isLoading, isError }} />
     </HomeTemplate>
   );
 };
