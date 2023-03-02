@@ -97,6 +97,14 @@ export const FormSection = ({ data }) => {
 
   const dispatch = useDispatch();
 
+  const resetFormInput = () => {
+    setState("");
+    setLGA("");
+    setPollingUnit("");
+    setIsFormCorrect(null);
+    setPollValues(addScoreKeyToPartyInfo(data.parties));
+  };
+
   const handleInputChange = (e) => {
     setPollValues((prev) => {
       const partyIndex = pollValues.findIndex((party) => {
@@ -162,6 +170,7 @@ export const FormSection = ({ data }) => {
       );
       if (response.payload) {
         toast.success("Data submitted successfully");
+        resetFormInput();
       } else {
         toast.error("An error occured!");
       }
