@@ -10,7 +10,7 @@ const ProgressElement = styled.div`
   position: relative;
 `;
 const ProgressWrapper = styled.div`
-  background-color: #c1c1c1;
+  background-color: #dbe3e1;
   margin: 16px 0;
   border-radius: 50px;
   width: 50%;
