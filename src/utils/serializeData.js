@@ -15,8 +15,8 @@ export const serializeLGAData = (lga) => {
 export const serializePollingUnitData = (pollingUnit) => {
   return pollingUnit.map((state) => {
     return {
-      id: state.registration_area_id,
-      label: `${state.registration_area_id} - ${state.name}`,
+      id: state.abbreviation,
+      label: `${state.abbreviation} - ${state.name}`,
     };
   });
 };
