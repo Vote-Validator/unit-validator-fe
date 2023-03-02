@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { CustomScrollBar } from "../../atoms/CustomScrollBar";
 import { useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { getLocalGovernmentsAsync } from "../../../store/features/localGovernment";
 import { pollingUnitsAsync } from "../../../store/features/pollingUnit";
@@ -91,6 +90,7 @@ export const FormSection = ({ data }) => {
   // const [lga, setLGA] = useState("");
   // const [pollingUnit, setPollingUnit] = useState("");
   const [isPresidentialForm, setIsPresidentialForm] = useState(false);
+  const [isImageClear, setIsImageClear] = useState(false);
   const [state, setState] = useState(null);
   const [lga, setLGA] = useState(null);
   const [pollingUnit, setPollingUnit] = useState(null);
@@ -101,7 +101,6 @@ export const FormSection = ({ data }) => {
 
   const [localGovernments, setLocalGovernments] = useState([]);
   const [pollingUnits, setPollingUnits] = useState([]);
-  const QueryClient = useQueryClient();
 
   const dispatch = useDispatch();
 
@@ -140,18 +139,16 @@ export const FormSection = ({ data }) => {
     setPollingUnit(newValue);
   };
 
-  const invalidateQuery = () => {
-    QueryClient.invalidateQueries("transcribe", {
-      exact: true,
-    });
-  };
-
   const handleIsFormCorrect = (e) => {
     setIsFormCorrect(e.target.value);
   };
 
   const handleIsPresidentialForm = (e) => {
     setIsPresidentialForm(e.target.value);
+  };
+
+  const handleIsImageClear = (e) => {
+    setIsImageClear(e.target.value);
   };
 
   const prepareSubmissionData = async () => {
@@ -232,6 +229,12 @@ export const FormSection = ({ data }) => {
             value={isPresidentialForm}
             onChange={handleIsPresidentialForm}
           />
+          <CheckBox
+            name="isImageClear"
+            label="This is not a Presidential form"
+            value={isImageClear}
+            onChange={handleIsImageClear}
+          />
         </div>
       </section>
 
@@ -299,8 +302,7 @@ export const FormSection = ({ data }) => {
         </DroopdownWrapper>
       </section>
 
-      <Flex justifyContent="space-between">
-        <Button onClick={invalidateQuery} color="red" text="Unclear Image" />
+      <Flex justifyContent="center">
         <Button onClick={prepareSubmissionData} color="black" text="SUBMIT" />
       </Flex>
     </>
