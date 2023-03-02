@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { Flex } from "../Flex";
 import styled from "styled-components";
 
-const Label = styled.label``;
+const Label = styled.label`
+  cursor: pointer;
+`;
 const Input = styled.input`
   margin-right: 10px;
+  cursor: pointer;
 `;
 
 export const CheckBox = ({ name, label }) => {

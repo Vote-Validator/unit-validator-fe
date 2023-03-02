@@ -3,7 +3,6 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 
 export const ComboBox = ({ value, onChange, data, label }) => {
-  console.log("autocomplete value", value);
   return (
     <Autocomplete
       fullWidth

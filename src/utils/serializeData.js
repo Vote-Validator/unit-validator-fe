@@ -1,6 +1,23 @@
 export const serializeStatesData = (states) => {
+  // console.log("states", states);
   return states.map((state) => {
     return { id: state.id, label: `${state.id} - ${state.name}` };
+  });
+};
+
+export const serializeLGAData = (lga) => {
+  // console.log("lga", lga);
+  return lga.map((state) => {
+    return { id: state.id, label: `${state.id} - ${state.name}` };
+  });
+};
+
+export const serializePollingUnitData = (pollingUnit) => {
+  return pollingUnit.map((state) => {
+    return {
+      id: state.registration_area_id,
+      label: `${state.registration_area_id} - ${state.name}`,
+    };
   });
 };
 

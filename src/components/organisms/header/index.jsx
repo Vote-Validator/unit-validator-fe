@@ -1,11 +1,39 @@
 import React from "react";
 import styled from "styled-components";
 import { NavBar } from "../../molecules";
+import { ProgressBar } from "../../atoms/ProgressBar";
+import { Loader } from "../../atoms/Loader";
+import { screen } from "../../theme/utils";
 
-export const Header = () => {
+const ProgressBarContainer = styled.div`
+  width: 25%;
+  position: absolute;
+  right: 10px;
+  top: 11px;
+
+  @media only screen and (${screen.sm}) {
+    width: 40%;
+  }
+`;
+export const Header = ({ stats }) => {
   return (
     <StyledHeaderWrapper>
       <NavBar />
+      {stats.isLoading ? (
+        <Loader type="circle" />
+      ) : stats.isError ? (
+        <p>Error</p>
+      ) : (
+        stats.data && (
+          <ProgressBarContainer>
+            {console.log(stats.data)}
+            <ProgressBar
+              value={stats?.data?.data?.statistics?.total_validated}
+              total={stats?.data?.data?.statistics?.total_images}
+            />
+          </ProgressBarContainer>
+        )
+      )}
 
       <StyledInstructionBox>
         <h2>INSTRUCTIONS</h2>
@@ -20,6 +48,7 @@ export const StyledHeaderWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 `;
 
 export const StyledInstructionBox = styled.div`
