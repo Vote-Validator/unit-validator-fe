@@ -113,7 +113,7 @@ export const HomePage = () => {
           )}
         </LeftContent>
       </ContentWrapper>
-      <ShowResults />
+      <ShowResults stats={{ data: initialData, isLoading, isError }} />
     </HomeTemplate>
   );
 };
