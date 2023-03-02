@@ -19,7 +19,7 @@ export const ShowResults = ({ stateId = 1 }) => {
         </h3>
       </SilentLink>
       <SummaryText width="80%">
-        2311 images validates so far. 345 images not validated yet
+        There are no validation results so far
       </SummaryText>
     </Flex>
   );
