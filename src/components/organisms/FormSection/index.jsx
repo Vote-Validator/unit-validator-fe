@@ -84,7 +84,7 @@ export const FormSection = ({ data }) => {
   const [state, setState] = useState("");
   const [lga, setLGA] = useState("");
   const [pollingUnit, setPollingUnit] = useState("");
-  const [formCorrectness, setFormCorrectness] = useState(true);
+  const [isFormCorrect, setIsFormCorrect] = useState(true);
   const [pollValues, setPollValues] = useState(
     addScoreKeyToPartyInfo(data.parties)
   );
@@ -132,26 +132,22 @@ export const FormSection = ({ data }) => {
     });
   };
 
-  const makeCorrectnessFalse = (e) => {
-    setFormCorrectness(false);
-  };
-
-  const makeCorrectnessTrue = (e) => {
-    setFormCorrectness(true);
+  const handleIsFormCorrect = (e) => {
+    setIsFormCorrect(e.target.value);
   };
 
   const prepareSubmissionData = () => {
     console.log({
       polling_unit_id: pollingUnit,
       image_id: data.image.id,
-      has_corrections: formCorrectness,
+      has_corrections: isFormCorrect,
       is_unclear: false,
       parties: serializePartiesDataForSubmission(pollValues),
     });
     return {
       polling_unit_id: pollingUnit,
       image_id: data.image.id,
-      has_corrections: formCorrectness,
+      has_corrections: isFormCorrect,
       is_unclear: false,
       parties: serializePartiesDataForSubmission(pollValues),
     };
@@ -179,14 +175,14 @@ export const FormSection = ({ data }) => {
         <RadioInput
           name="form_correctness"
           label="Yes, there are corrections on this form"
-          value={formCorrectness ? formCorrectness : false}
-          onChange={makeCorrectnessFalse}
+          value={true}
+          onChange={handleIsFormCorrect}
         />
         <RadioInput
           name="form_correctness"
           label="No, the form is intact"
-          value={!formCorrectness ? false : formCorrectness}
-          onChange={makeCorrectnessTrue}
+          value={false}
+          onChange={handleIsFormCorrect}
         />
       </div>
 
