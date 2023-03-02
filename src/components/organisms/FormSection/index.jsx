@@ -26,7 +26,6 @@ import nnpcImg from "../../../assets/svgs/nnpp.svg";
 import { storeTranscribedDataAsync } from "../../../store/features/transcribe";
 import { toast } from "react-toastify";
 import { ComboBox } from "../../molecules";
-import { ProgressBar } from "../../atoms/ProgressBar";
 
 export const partiesInfo = [
   {
@@ -190,7 +189,6 @@ export const FormSection = ({ data }) => {
 
   return (
     <>
-      <ProgressBar value={170} total={350} />
       <PartiesInputSection>
         {pollValues.map((data, idx) => (
           <VoteInput
@@ -303,7 +301,14 @@ export const FormSection = ({ data }) => {
       </section>
 
       <Flex justifyContent="center">
-        <Button onClick={prepareSubmissionData} color="black" text="SUBMIT" />
+        <Button
+          onClick={prepareSubmissionData}
+          borderColor="#C8C8C8"
+          backgroundColor="#C8C8C8"
+          color="#ffffff"
+          text="SUBMIT"
+          margin="16px 0 0 0"
+        />
       </Flex>
     </>
   );

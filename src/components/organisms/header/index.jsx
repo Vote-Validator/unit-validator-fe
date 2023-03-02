@@ -1,11 +1,21 @@
 import React from "react";
 import styled from "styled-components";
 import { NavBar } from "../../molecules";
+import { ProgressBar } from "../../atoms/ProgressBar";
 
+const ProgressBarContainer = styled.div`
+  width: 25%;
+  position: absolute;
+  right: 10px;
+  top: 14px;
+`;
 export const Header = () => {
   return (
     <StyledHeaderWrapper>
       <NavBar />
+      <ProgressBarContainer>
+        <ProgressBar value={170} total={350} />
+      </ProgressBarContainer>
 
       <StyledInstructionBox>
         <h2>INSTRUCTIONS</h2>
@@ -20,6 +30,7 @@ export const StyledHeaderWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 `;
 
 export const StyledInstructionBox = styled.div`
