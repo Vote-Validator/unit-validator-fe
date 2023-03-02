@@ -24,6 +24,7 @@ const StatusValueText = styled.p`
   font-style: italic;
   font-size: 0.65rem;
   color: ${({ color }) => color || "#147B5C"};
+  white-space: nowrap;
 `;
 
 export const ProgressBar = ({ value, total }) => {
@@ -32,14 +33,23 @@ export const ProgressBar = ({ value, total }) => {
     percentageOfCompletion % 2 === 0
       ? percentageOfCompletion
       : percentageOfCompletion.toFixed(1);
+  const leftStatusTextProps = {
+    top: "-24px",
+    [displayFigure < 20 ? "left" : "right"]: displayFigure < 20 ? "0" : "5px",
+  };
+  const innerTextProps = {
+    [displayFigure < 20 ? "left" : "right"]: displayFigure < 20 ? "5px" : "5px",
+    color: "#ffffff",
+  };
+
   return (
     <ProgressWrapper>
       <StatusValueText top="7px" color="black">
         {total - value} to go
       </StatusValueText>
       <ProgressElement width={`${displayFigure}%`}>
-        <StatusValueText color="#ffffff">{displayFigure}%</StatusValueText>
-        <StatusValueText top="-24px" color="black">
+        <StatusValueText {...innerTextProps}>{displayFigure}%</StatusValueText>
+        <StatusValueText {...leftStatusTextProps} color="black">
           {value} validated
         </StatusValueText>
       </ProgressElement>
