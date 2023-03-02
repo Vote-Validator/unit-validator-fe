@@ -102,7 +102,7 @@ export const FormSection = ({ data }) => {
   const dispatch = useDispatch();
 
   const reloadPage = () => {
-    window.location.reload(false);
+    window.setTimeout(() => window.location.reload(false), 3000);
   };
 
   const handleInputChange = (e) => {
@@ -169,6 +169,12 @@ export const FormSection = ({ data }) => {
         storeTranscribedDataAsync(transcriptionData)
       );
       if (response.payload) {
+        // const resolveAfter2Sec = new Promise((resolve) =>
+        //   setTimeout(resolve, 2000)
+        // );
+        // await toast.promise(resolveAfter2Sec, {
+        //   success: "Data submitted successfully",
+        // });
         toast.success("Data submitted successfully");
         reloadPage();
       } else {
