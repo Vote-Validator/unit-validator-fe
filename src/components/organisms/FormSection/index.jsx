@@ -316,9 +316,7 @@ export const FormSection = ({ data }) => {
       <Flex justifyContent="center">
         <Button
           onClick={prepareSubmissionData}
-          borderColor="#C8C8C8"
           backgroundColor="#C8C8C8"
-          color="#ffffff"
           text="SUBMIT"
           margin="16px 0 0 0"
         />

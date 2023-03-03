@@ -12,7 +12,9 @@ export const ComboBox = ({ value, onChange, data, label }) => {
       onChange={onChange}
       options={data}
       isOptionEqualToValue={(option, value) => option.id === value.id}
-      renderInput={(params) => <TextField {...params} label={label} />}
+      renderInput={(params) => (
+        <TextField color="success" {...params} label={label} />
+      )}
     />
   );
 };
