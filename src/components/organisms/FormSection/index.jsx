@@ -143,16 +143,16 @@ export const FormSection = ({ data }) => {
     setIsFormCorrect(e.target.value);
   };
 
-  const handleisNotPresidentialForm = (e) => {
-    setIsNotPresidentialForm(e.target.value);
+  const handleisNotPresidentialForm = () => {
+    setIsNotPresidentialForm((prev) => !prev);
   };
 
-  const handleisUnclear = (e) => {
-    setIsUnclear(e.target.value);
+  const handleisUnclear = () => {
+    setIsUnclear((prev) => !prev);
   };
 
-  const handleIsSignedByAgent = (e) => {
-    setIsSignedByAgent(e.target.value);
+  const handleIsSignedByAgent = () => {
+    setIsSignedByAgent((prev) => !prev);
   };
 
   const prepareSubmissionData = async () => {
@@ -172,7 +172,7 @@ export const FormSection = ({ data }) => {
           isFormCorrect === "true" || isFormCorrect === true ? true : false,
         is_unclear: isUnclear,
         is_invalid_form: isNotPresidentialForm,
-        is_not_signed: !isSignedByAgent,
+        is_signed: isSignedByAgent,
         parties: serializePartiesDataForSubmission(pollValues),
       };
 
