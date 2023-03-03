@@ -6,16 +6,15 @@ const ButtonWrapper = styled.button`
   border-radius: 0;
   cursor: pointer;
   padding: 12px 28px;
-  color: ${({ color }) => color};
+  color: #5e5d5d;
+  border: 1px solid black;
+  font-weight: bold;
   background-color: ${({ bgColor }) => bgColor};
-  border: 1px solid ${({ borderColor }) => borderColor};
   margin: ${({ margin }) => margin};
   margin: ${({ margin }) => margin};
 
   &:hover {
     color: black;
-    border: 1px solid black;
-    font-weight: bold;
   }
 `;
 
