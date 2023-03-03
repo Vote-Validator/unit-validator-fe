@@ -88,8 +88,9 @@ export const FormSection = ({ data }) => {
   // const [state, setState] = useState("");
   // const [lga, setLGA] = useState("");
   // const [pollingUnit, setPollingUnit] = useState("");
-  const [isPresidentialForm, setIsPresidentialForm] = useState(false);
-  const [isImageClear, setIsImageClear] = useState(false);
+  const [isNotPresidentialForm, setIsNotPresidentialForm] = useState(false);
+  const [isUnclear, setIsUnclear] = useState(false);
+  const [isSignedByAgent, setIsSignedByAgent] = useState(false);
   const [state, setState] = useState(null);
   const [lga, setLGA] = useState(null);
   const [pollingUnit, setPollingUnit] = useState(null);
@@ -142,12 +143,16 @@ export const FormSection = ({ data }) => {
     setIsFormCorrect(e.target.value);
   };
 
-  const handleIsPresidentialForm = (e) => {
-    setIsPresidentialForm(e.target.value);
+  const handleisNotPresidentialForm = (e) => {
+    setIsNotPresidentialForm(e.target.value);
   };
 
-  const handleIsImageClear = (e) => {
-    setIsImageClear(e.target.value);
+  const handleisUnclear = (e) => {
+    setIsUnclear(e.target.value);
+  };
+
+  const handleIsSignedByAgent = (e) => {
+    setIsSignedByAgent(e.target.value);
   };
 
   const prepareSubmissionData = async () => {
@@ -165,7 +170,9 @@ export const FormSection = ({ data }) => {
         image_id: data.image.id,
         has_corrections:
           isFormCorrect === "true" || isFormCorrect === true ? true : false,
-        is_unclear: false,
+        is_unclear: isUnclear,
+        is_invalid_form: isNotPresidentialForm,
+        is_not_signed: !isSignedByAgent,
         parties: serializePartiesDataForSubmission(pollValues),
       };
 
@@ -222,16 +229,22 @@ export const FormSection = ({ data }) => {
             onChange={handleIsFormCorrect}
           />
           <CheckBox
-            name="isPresidentialForm"
+            name="isNotPresidentialForm"
             label="This is not a Presidential form"
-            value={isPresidentialForm}
-            onChange={handleIsPresidentialForm}
+            value={isNotPresidentialForm}
+            onChange={handleisNotPresidentialForm}
           />
           <CheckBox
-            name="isImageClear"
-            label="This is not a Presidential form"
-            value={isImageClear}
-            onChange={handleIsImageClear}
+            name="isUnclear"
+            label="This document is unclear"
+            value={isUnclear}
+            onChange={handleisUnclear}
+          />
+          <CheckBox
+            name="isSignedByAgent"
+            label="This Document was signed by an LP or PDP agent"
+            value={isSignedByAgent}
+            onChange={handleIsSignedByAgent}
           />
         </div>
       </section>
