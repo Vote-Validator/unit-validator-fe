@@ -22,7 +22,7 @@ const Section = styled(Flex)`
   align-items: center;
   flex-direction: column;
   padding: ${({ padding }) => padding};
-  height: ${isMobile ? "100%" : "calc(100vh - 120px)"};
+  min-height: ${isMobile ? "100%" : "calc(100vh - 120px)"};
 `;
 
 export const StatisticsTemplate = ({
