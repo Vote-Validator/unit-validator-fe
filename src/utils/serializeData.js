@@ -1,12 +1,10 @@
 export const serializeStatesData = (states) => {
-  // console.log("states", states);
   return states.map((state) => {
     return { id: state.id, label: `${state.id} - ${state.name}` };
   });
 };
 
 export const serializeLGAData = (lga) => {
-  // console.log("lga", lga);
   return lga.map((state) => {
     return { id: state.id, label: `${state.id} - ${state.name}` };
   });

@@ -7,11 +7,13 @@ import styled from "styled-components";
 // import Lpimg from "./../../../assets/svgs/lp.svg";
 // import Nnppimg from "./../../../assets/svgs/nnpp.svg";
 import generateColor from "../../../utils/generateColor";
+import { getAllowedParties } from "../../../utils/getAllowedParties";
+// import { getAllowedParties } from "../../../utils/getAllowedParties";
 
 const BarChartContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   font-family: sans-serif;
   margin: 1rem;
   padding: 40px 80px;
@@ -154,24 +156,70 @@ export const initialBarData = [
   },
 ];
 function BarChart({ chartData }) {
-  const totalVotesCast = 1000;
+  const totalVotes = chartData.total_votes;
+  const sortedResult = getAllowedParties(
+    Array.from(Object.values(chartData.results)),
+    "party"
+  ).sort(function (a, b) {
+    return b.score - a.score;
+  });
+  // const firstFiveParties = sortedResult.slice(0, 5);
+  // const others = sortedResult.slice(5, sortedResult.length);
 
   return (
-    <BarChartContainer>
-      {chartData.map((item, index) => {
-        const percentageWidth = (item.score / totalVotesCast) * 100;
-        return (
-          <BarContainer key={index}>
-            <BarLogo>
-              <Imgage src={item.logo} alt="" />
-              <PartyLabel>{item.party}</PartyLabel>
-            </BarLogo>
-            <Bar width={percentageWidth} color={generateColor()} />
-            <BarLabel>{`${item.score} votes`}</BarLabel>
-          </BarContainer>
-        );
-      })}
-    </BarChartContainer>
+    <div>
+      <BarChartContainer>
+        {/* <h3>Top 5 parties</h3> */}
+        {sortedResult.map((item, index) => {
+          const percentageWidth = (item.score / totalVotes) * 100;
+
+          return (
+            <BarContainer key={index}>
+              <BarLogo>
+                <Imgage src={item.icon} alt="" />
+                <PartyLabel>{item.party}</PartyLabel>
+              </BarLogo>
+              <Bar
+                width={percentageWidth ? percentageWidth : 0}
+                color={generateColor()}
+              />
+              <BarLabel>{`${item.score} votes`}</BarLabel>
+            </BarContainer>
+          );
+        })}
+      </BarChartContainer>
+
+      {/* <BarChartContainer>
+        <details closed>
+          <summary
+            style={{
+              fontSize: "1.2rem",
+              marginBottom: "20px",
+              fontWeight: "bold",
+            }}
+          >
+            View Others
+          </summary>
+          {others.map((item, index) => {
+            const percentageWidth = (item.score / totalVotes) * 100;
+
+            return (
+              <BarContainer key={index}>
+                <BarLogo>
+                  <Imgage src={item.icon} alt="" />
+                  <PartyLabel>{item.party}</PartyLabel>
+                </BarLogo>
+                <Bar
+                  width={percentageWidth ? percentageWidth : 0}
+                  color={generateColor()}
+                />
+                <BarLabel>{`${item.score} votes`}</BarLabel>
+              </BarContainer>
+            );
+          })}
+        </details>
+      </BarChartContainer> */}
+    </div>
   );
 }
 

@@ -26,7 +26,6 @@ export const Header = ({ stats }) => {
       ) : (
         stats.data && (
           <ProgressBarContainer>
-            {console.log(stats.data)}
             <ProgressBar
               value={stats?.data?.data?.statistics?.total_validated}
               total={stats?.data?.data?.statistics?.total_images}

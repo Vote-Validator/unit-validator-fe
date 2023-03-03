@@ -26,6 +26,7 @@ import nnpcImg from "../../../assets/svgs/nnpp.svg";
 import { storeTranscribedDataAsync } from "../../../store/features/transcribe";
 import { toast } from "react-toastify";
 import { ComboBox } from "../../molecules";
+import { getAllowedParties } from "../../../utils/getAllowedParties";
 
 export const partiesInfo = [
   {
@@ -88,6 +89,7 @@ export const FormSection = ({ data }) => {
   // const [state, setState] = useState("");
   // const [lga, setLGA] = useState("");
   // const [pollingUnit, setPollingUnit] = useState("");
+  const ALLOWED_PARTIES = getAllowedParties(data.parties);
   const [isNotPresidentialForm, setIsNotPresidentialForm] = useState(false);
   const [isUnclear, setIsUnclear] = useState(false);
   const [isNotSignedByAgent, setIsNotSignedByAgent] = useState(false);
@@ -96,7 +98,7 @@ export const FormSection = ({ data }) => {
   const [pollingUnit, setPollingUnit] = useState(null);
   const [isFormCorrect, setIsFormCorrect] = useState(null);
   const [pollValues, setPollValues] = useState(
-    addScoreKeyToPartyInfo(data.parties)
+    addScoreKeyToPartyInfo(ALLOWED_PARTIES)
   );
 
   const [localGovernments, setLocalGovernments] = useState([]);

@@ -3,8 +3,6 @@ import { partiesInfo } from "../../../utils";
 import styled from "styled-components";
 
 const Parties = () => {
-  console.log(partiesInfo);
-
   // eslint-disable-next-line no-unused-vars
   const [partydata, setPartyData] = useState(partiesInfo);
   return (

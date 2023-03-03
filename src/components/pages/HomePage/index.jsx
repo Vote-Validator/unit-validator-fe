@@ -60,7 +60,6 @@ const ErrrorText = styled.p`
 `;
 export const fetchInitialData = async () => {
   const response = await apiService("/api/v1/transcribe", "GET");
-  console.log("request response", response);
   if (response.data.session_id) {
     localStorage.setItem("session_id", response.data.session_id);
   }
@@ -98,6 +97,7 @@ export const HomePage = () => {
               <ImageWrapper>
                 <ReactPanZoom image={initialData.data.image.url} />
               </ImageWrapper>
+              // <div></div>
             )
           )}
         </RightContent>
