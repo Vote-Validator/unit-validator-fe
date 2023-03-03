@@ -10,8 +10,6 @@ import apiService from "../../../api-utils/api-service";
 import { useQuery } from "@tanstack/react-query";
 import { Loader } from "../../atoms/Loader";
 import ReactPanZoom from "react-image-pan-zoom-rotate";
-import PDF from "../../../assets/pdf/test_file.pdf";
-import { PDFViewer } from "../../atoms/PDFViewer";
 
 const ContentWrapper = styled(Flex)`
   padding: 30px;
@@ -62,7 +60,6 @@ const ErrrorText = styled.p`
 `;
 export const fetchInitialData = async () => {
   const response = await apiService("/api/v1/transcribe", "GET");
-  console.log("request response", response);
   if (response.data.session_id) {
     localStorage.setItem("session_id", response.data.session_id);
   }
@@ -97,10 +94,10 @@ export const HomePage = () => {
             </ErrorAndLoaderWrapper>
           ) : (
             initialData && (
-              // <ImageWrapper>
-              //   <ReactPanZoom image={initialData.data.image.url} />
-              // </ImageWrapper>
-              <PDFViewer pdfURL={PDF} />
+              <ImageWrapper>
+                <ReactPanZoom image={initialData.data.image.url} />
+              </ImageWrapper>
+              // <div></div>
             )
           )}
         </RightContent>

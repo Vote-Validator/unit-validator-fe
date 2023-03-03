@@ -7,6 +7,8 @@ import styled from "styled-components";
 // import Lpimg from "./../../../assets/svgs/lp.svg";
 // import Nnppimg from "./../../../assets/svgs/nnpp.svg";
 import generateColor from "../../../utils/generateColor";
+import { getAllowedParties } from "../../../utils/getAllowedParties";
+// import { getAllowedParties } from "../../../utils/getAllowedParties";
 
 const BarChartContainer = styled.div`
   display: flex;
@@ -155,18 +157,20 @@ export const initialBarData = [
 ];
 function BarChart({ chartData }) {
   const totalVotes = chartData.total_votes;
-  const sortedResult = chartData.results.sort(function (a, b) {
-    return a.score - b.score;
+  const sortedResult = getAllowedParties(
+    Array.from(Object.values(chartData.results)),
+    "party"
+  ).sort(function (a, b) {
+    return b.score - a.score;
   });
-  const firstFiveParties = sortedResult.slice(0, 5);
-  const others = sortedResult.slice(5, sortedResult.length);
-  console.log(firstFiveParties, others);
+  // const firstFiveParties = sortedResult.slice(0, 5);
+  // const others = sortedResult.slice(5, sortedResult.length);
 
   return (
     <div>
       <BarChartContainer>
-        <h3>Top 5 parties</h3>
-        {firstFiveParties.map((item, index) => {
+        {/* <h3>Top 5 parties</h3> */}
+        {sortedResult.map((item, index) => {
           const percentageWidth = (item.score / totalVotes) * 100;
 
           return (
@@ -185,7 +189,7 @@ function BarChart({ chartData }) {
         })}
       </BarChartContainer>
 
-      <BarChartContainer>
+      {/* <BarChartContainer>
         <details closed>
           <summary
             style={{
@@ -214,7 +218,7 @@ function BarChart({ chartData }) {
             );
           })}
         </details>
-      </BarChartContainer>
+      </BarChartContainer> */}
     </div>
   );
 }
