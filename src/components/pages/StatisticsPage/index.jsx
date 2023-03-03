@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Loader } from "../../atoms/Loader";
 
 const fetchResultsData = async (stateId) => {
-  const response = await apiService(`/api/v1/results/states/${stateId}`, "GET");
+  const response = await apiService(`/api/v1/results`, "GET");
   console.log(response.data.data.results);
   return response?.data?.data?.results;
 };

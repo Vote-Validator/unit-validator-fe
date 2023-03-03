@@ -60,6 +60,10 @@ const ErrrorText = styled.p`
 `;
 export const fetchInitialData = async () => {
   const response = await apiService("/api/v1/transcribe", "GET");
+  console.log("request response", response);
+  if (response.data.session_id) {
+    localStorage.setItem("session_id", response.data.session_id);
+  }
   return response.data;
 };
 
