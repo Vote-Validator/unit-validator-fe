@@ -11,10 +11,10 @@ const SummaryText = styled.p`
     text-align: center;
   }
 `;
-export const ShowResults = ({ stateId = 1, stats }) => {
+export const ShowResults = ({ stats }) => {
   return (
     <Flex direction="column" justifyContent="center" alignItems="center">
-      <SilentLink to={`/statistics/${stateId}`}>
+      <SilentLink to={`/results`}>
         <h3 style={{ color: "#147B5C", margin: "6px 0" }}>
           Show Results &#10132;
         </h3>

@@ -10,6 +10,8 @@ import apiService from "../../../api-utils/api-service";
 import { useQuery } from "@tanstack/react-query";
 import { Loader } from "../../atoms/Loader";
 import ReactPanZoom from "react-image-pan-zoom-rotate";
+import PDF from "../../../assets/pdf/test_file.pdf";
+import { PDFViewer } from "../../atoms/PDFViewer";
 
 const ContentWrapper = styled(Flex)`
   padding: 30px;
@@ -95,9 +97,10 @@ export const HomePage = () => {
             </ErrorAndLoaderWrapper>
           ) : (
             initialData && (
-              <ImageWrapper>
-                <ReactPanZoom image={initialData.data.image.url} />
-              </ImageWrapper>
+              // <ImageWrapper>
+              //   <ReactPanZoom image={initialData.data.image.url} />
+              // </ImageWrapper>
+              <PDFViewer pdfURL={PDF} />
             )
           )}
         </RightContent>

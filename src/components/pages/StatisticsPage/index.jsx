@@ -11,7 +11,7 @@ import { Loader } from "../../atoms/Loader";
 const fetchResultsData = async (stateId) => {
   const response = await apiService(`/api/v1/results`, "GET");
   console.log(response.data.data.results);
-  return response?.data?.data?.results;
+  return response?.data?.data;
 };
 
 export const StatisticsPage = () => {
@@ -28,6 +28,11 @@ export const StatisticsPage = () => {
       <h4 style={{ color: "#147B5C", margin: "6px 0 16px 0" }}>
         Current Results
       </h4>
+      <h5 style={{ margin: 0 }}>Kindly note the following</h5>
+      <ul style={{ fontSize: "0.8rem", fontStyle: "italic" }}>
+        <li>The results displayed here are yet to be validated</li>
+        <li>This page will be updated with new data every 15mins</li>
+      </ul>
       {isLoading ? (
         <Loader />
       ) : isError ? (
