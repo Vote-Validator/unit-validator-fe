@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import Pdpimg from "./../../../assets/svgs/pdp.svg";
-import Apcimg from "./../../../assets/svgs/apc.svg";
-import Adpimg from "./../../../assets/svgs/adp.svg";
-import Apgaimg from "./../../../assets/svgs/apga.svg";
-import Lpimg from "./../../../assets/svgs/lp.svg";
-import Nnppimg from "./../../../assets/svgs/nnpp.svg";
+// import Pdpimg from "./../../../assets/svgs/pdp.svg";
+// import Apcimg from "./../../../assets/svgs/apc.svg";
+// import Adpimg from "./../../../assets/svgs/adp.svg";
+// import Apgaimg from "./../../../assets/svgs/apga.svg";
+// import Lpimg from "./../../../assets/svgs/lp.svg";
+// import Nnppimg from "./../../../assets/svgs/nnpp.svg";
 import generateColor from "../../../utils/generateColor";
 
 const BarChartContainer = styled.div`
@@ -129,61 +129,48 @@ const Bar = styled.div`
 `;
 export const initialBarData = [
   {
-    logo: Pdpimg,
-    party: "PDP",
-    label: "194 votes",
-    value: 57,
-    color: "#CB1D23",
+    party: "A",
+    score: 4,
   },
   {
-    logo: Apcimg,
     party: "APC",
-    label: "194 votes",
-    value: 30,
-    color: "#51BFF4",
+    score: 68,
   },
   {
-    logo: Adpimg,
-    party: "ADP",
-    label: "194 votes",
-    value: 75,
-    color: "#0A1C5B",
+    party: "LP",
+    score: 588,
   },
   {
-    logo: Apgaimg,
-    party: "APGA",
-    label: "194 votes",
-    value: 10,
-    color: "#E2DB00",
-  },
-  {
-    logo: Lpimg,
     party: "PDP",
-    label: "194 votes",
-    value: 100,
-    color: "#00923E",
+    score: 64,
   },
   {
-    logo: Nnppimg,
-    party: "NNPP",
-    label: "194 votes",
-    value: 20,
-    color: "#4A045C",
+    party: "YPP",
+    score: 20,
+  },
+  {
+    party: "ZLP",
+    score: 4,
   },
 ];
 function BarChart({ chartData }) {
+  const totalVotesCast = 1000;
+
   return (
     <BarChartContainer>
-      {chartData.map((item, index) => (
-        <BarContainer key={index}>
-          <BarLogo>
-            <Imgage src={item.logo} alt="" />
-            <PartyLabel>{item.party}</PartyLabel>
-          </BarLogo>
-          <Bar width={item.score} color={generateColor()} />
-          <BarLabel>{`${item.score} votes`}</BarLabel>
-        </BarContainer>
-      ))}
+      {chartData.map((item, index) => {
+        const percentageWidth = (item.score / totalVotesCast) * 100;
+        return (
+          <BarContainer key={index}>
+            <BarLogo>
+              <Imgage src={item.logo} alt="" />
+              <PartyLabel>{item.party}</PartyLabel>
+            </BarLogo>
+            <Bar width={percentageWidth} color={generateColor()} />
+            <BarLabel>{`${item.score} votes`}</BarLabel>
+          </BarContainer>
+        );
+      })}
     </BarChartContainer>
   );
 }
