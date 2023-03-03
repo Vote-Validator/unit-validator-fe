@@ -14,13 +14,13 @@ const Wrapper = styled(Flex)`
   align-items: center;
 
   @media only screen and (${screen.sm}) {
-    justify-content: flex-start;
+    justify-content: ${({ justifyContent }) => justifyContent || "flex-start"};
   }
 `;
 
-export const NavBar = () => {
+export const NavBar = ({ justifyContent }) => {
   return (
-    <Wrapper>
+    <Wrapper justifyContent={justifyContent}>
       <div>
         <LogoSvg width="32px" height="32px" />
       </div>
