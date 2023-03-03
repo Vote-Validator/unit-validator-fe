@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Flex } from "../Flex";
 import styled from "styled-components";
 
@@ -10,22 +10,17 @@ const Input = styled.input`
   cursor: pointer;
 `;
 
-export const CheckBox = ({ name, label }) => {
-  const [value, setValue] = useState(false);
+export const CheckBox = ({ name, label, value, onChange }) => {
+  // const [value, setValue] = useState(false);
 
-  const handleInputChange = (e) => {
-    setValue(e.target.value);
-  };
+  // const handleInputChange = (e) => {
+  //   setValue(e.target.value);
+  // };
 
   return (
     <Flex margin="0 0 10px 0">
       <Label>
-        <Input
-          type="checkbox"
-          value={value}
-          name={name}
-          onChange={handleInputChange}
-        />
+        <Input type="checkbox" value={value} name={name} onChange={onChange} />
         {label}
       </Label>
     </Flex>
