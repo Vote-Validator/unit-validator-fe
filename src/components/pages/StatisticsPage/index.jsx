@@ -21,7 +21,10 @@ export const StatisticsPage = () => {
   );
 
   return (
-    <StatisticsTemplate header={<NavBar />} footer={<Footer />}>
+    <StatisticsTemplate
+      header={<NavBar justifyContent="center" />}
+      footer={<Footer />}
+    >
       <h4 style={{ color: "#147B5C", margin: "6px 0 16px 0" }}>
         Current Results
       </h4>
