@@ -90,7 +90,7 @@ export const FormSection = ({ data }) => {
   // const [pollingUnit, setPollingUnit] = useState("");
   const [isNotPresidentialForm, setIsNotPresidentialForm] = useState(false);
   const [isUnclear, setIsUnclear] = useState(false);
-  const [isSignedByAgent, setIsSignedByAgent] = useState(false);
+  const [isNotSignedByAgent, setIsNotSignedByAgent] = useState(false);
   const [state, setState] = useState(null);
   const [lga, setLGA] = useState(null);
   const [pollingUnit, setPollingUnit] = useState(null);
@@ -151,8 +151,8 @@ export const FormSection = ({ data }) => {
     setIsUnclear((prev) => !prev);
   };
 
-  const handleIsSignedByAgent = () => {
-    setIsSignedByAgent((prev) => !prev);
+  const handleisNotSignedByAgent = () => {
+    setIsNotSignedByAgent((prev) => !prev);
   };
 
   const prepareSubmissionData = async () => {
@@ -172,7 +172,7 @@ export const FormSection = ({ data }) => {
           isFormCorrect === "true" || isFormCorrect === true ? true : false,
         is_unclear: isUnclear,
         is_invalid_form: isNotPresidentialForm,
-        is_signed: isSignedByAgent,
+        is_not_signed: isNotSignedByAgent,
         parties: serializePartiesDataForSubmission(pollValues),
       };
 
@@ -241,10 +241,10 @@ export const FormSection = ({ data }) => {
             onChange={handleisUnclear}
           />
           <CheckBox
-            name="isSignedByAgent"
-            label="This Document was signed by an LP or PDP agent"
-            value={isSignedByAgent}
-            onChange={handleIsSignedByAgent}
+            name="isNotSignedByAgent"
+            label="This Document was not signed by an LP or PDP agent"
+            value={isNotSignedByAgent}
+            onChange={handleisNotSignedByAgent}
           />
         </div>
       </section>
