@@ -62,6 +62,7 @@ export const fetchInitialData = async () => {
   const response = await apiService("/api/v1/transcribe", "GET");
   if (response.data.session_id) {
     localStorage.setItem("session_id", response.data.session_id);
+    console.log("response data", response.data);
   }
   return response.data;
 };
