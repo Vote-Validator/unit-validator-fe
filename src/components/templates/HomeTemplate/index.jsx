@@ -14,6 +14,8 @@ const Footer = styled.footer`
 
 const Section = styled.section`
   padding: ${({ padding }) => padding};
+  max-width: 1440px;
+  margin: auto;
 `;
 
 export const HomeTemplate = ({ header, children, footer, backgroundColor }) => (

@@ -10,7 +10,7 @@ const Input = styled.input`
   cursor: pointer;
 `;
 
-export const CheckBox = ({ name, label, value, onChange }) => {
+export const CheckBox = ({ keyValue, name, label, value, onChange }) => {
   // const [value, setValue] = useState(false);
 
   // const handleInputChange = (e) => {
@@ -18,7 +18,7 @@ export const CheckBox = ({ name, label, value, onChange }) => {
   // };
 
   return (
-    <Flex margin="0 0 10px 0">
+    <Flex key={keyValue} margin="0 0 10px 0">
       <Label>
         <Input type="checkbox" value={value} name={name} onChange={onChange} />
         {label}
