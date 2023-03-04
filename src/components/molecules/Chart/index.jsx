@@ -168,7 +168,7 @@ function BarChart({ chartData }) {
 
   return (
     <BarChartContainer>
-      {/* <h3>Top 5 parties</h3> */}
+      <h3>Total Votes: {totalVotes}</h3>
       {sortedResult.map((item, index) => {
         const percentageWidth = (item.score / totalVotes) * 100;
 

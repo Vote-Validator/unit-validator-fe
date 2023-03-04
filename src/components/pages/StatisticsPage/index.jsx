@@ -7,6 +7,7 @@ import apiService from "../../../api-utils/api-service";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Loader } from "../../atoms/Loader";
+import { SilentLink } from "../../atoms/SilentLink";
 
 const fetchResultsData = async (stateId) => {
   const response = await apiService(`/api/v1/results`, "GET");
@@ -44,6 +45,10 @@ export const StatisticsPage = () => {
       ) : (
         <BarChart chartData={data} />
       )}
+
+      <SilentLink to={`/`}>
+        <h3 style={{ color: "#147B5C", margin: "6px 0" }}>&#x2190; Back</h3>
+      </SilentLink>
     </StatisticsTemplate>
   );
 };
