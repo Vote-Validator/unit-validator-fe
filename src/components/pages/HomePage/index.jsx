@@ -10,7 +10,6 @@ import apiService from "../../../api-utils/api-service";
 import { useQuery } from "@tanstack/react-query";
 import { Loader } from "../../atoms/Loader";
 import ReactPanZoom from "react-image-pan-zoom-rotate";
-import { CustomScrollBar } from "../../atoms/CustomScrollBar";
 
 const ContentWrapper = styled(Flex)`
   padding: 30px 0;
@@ -35,19 +34,15 @@ const RightContent = styled(Flex)`
 const LeftContent = styled(Flex)`
   width: 30%;
   min-height: 60px;
-  max-height: 70vh;
+  /* max-height: 70vh;
   overflow: auto;
   padding-right: 6px;
   padding-bottom: 60px;
-
-  ${CustomScrollBar}
+ */
 
   @media only screen and (${screen.sm}) {
     padding: 30px 0;
     width: 100%;
-    max-height: fit-content;
-    padding-right: 0;
-    padding-bottom: 60px;
   }
 `;
 const ImageWrapper = styled.div`
