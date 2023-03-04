@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { CustomScrollBar } from "../../atoms/CustomScrollBar";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { getLocalGovernmentsAsync } from "../../../store/features/localGovernment";
@@ -67,14 +66,7 @@ export const partiesInfo = [
 const DroopdownWrapper = styled.div`
   margin-bottom: 10px;
 `;
-const PartiesInputSection = styled.section`
-  min-height: 60px;
-  max-height: 60vh;
-  overflow: auto;
-  padding-right: 6px;
-
-  ${CustomScrollBar};
-`;
+const PartiesInputSection = styled.section``;
 const addScoreKeyToPartyInfo = (parties) => {
   const newParties = [...parties];
   return newParties?.map((party) => {
@@ -101,7 +93,7 @@ export const FormSection = ({ data }) => {
   const [pollValues, setPollValues] = useState(
     addScoreKeyToPartyInfo(ALLOWED_PARTIES)
   );
-
+  const session_id = localStorage.getItem("session_id");
   const [localGovernments, setLocalGovernments] = useState([]);
   const [pollingUnits, setPollingUnits] = useState([]);
 
@@ -187,11 +179,15 @@ export const FormSection = ({ data }) => {
         parties: serializePartiesDataForSubmission(pollValues),
       };
 
+      if (session_id) transcriptionData.session_id = session_id;
+
       const response = await dispatch(
         storeTranscribedDataAsync(transcriptionData)
       );
       if (response.payload) {
-        localStorage.setItem("session_id", response.payload.session_id);
+        if (!session_id)
+          localStorage.setItem("session_id", response.payload.session_id);
+
         toast.success("Data submitted successfully");
         reloadPage();
       } else {
