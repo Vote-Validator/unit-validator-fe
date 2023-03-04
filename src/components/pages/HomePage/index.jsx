@@ -83,7 +83,7 @@ export const HomePage = () => {
       header={<Header stats={{ data: initialData, isLoading, isError }} />}
       footer={<Footer />}
     >
-      <ContentWrapper>
+      <ContentWrapper className="container">
         <RightContent width="70%">
           {isLoading ? (
             <ErrorAndLoaderWrapper>
