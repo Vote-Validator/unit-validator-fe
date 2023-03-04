@@ -223,7 +223,7 @@ export const FormSection = ({ data }) => {
               keyValue={`${idx}-checkbox`}
               name={data.id}
               onChange={handleSignedInputChange}
-              label={`${data.name} representative did not signed this form.`}
+              label={`${data.name} representative did not sign this form.`}
               value={data.score}
             />
           </div>

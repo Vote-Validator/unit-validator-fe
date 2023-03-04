@@ -15,7 +15,8 @@ const Header = styled.header`
 
 const Footer = styled.footer`
   height: 60px;
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
+  background-color: #147b5c;
 `;
 
 const Section = styled(Flex)`
@@ -23,8 +24,6 @@ const Section = styled(Flex)`
   flex-direction: column;
   padding: ${({ padding }) => padding};
   min-height: ${isMobile ? "100%" : "calc(100vh - 120px)"};
-  max-width: 1440px;
-  margin: auto;
 `;
 
 export const StatisticsTemplate = ({

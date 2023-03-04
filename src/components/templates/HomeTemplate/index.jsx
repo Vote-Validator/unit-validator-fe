@@ -2,6 +2,8 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 // import { Flex } from "../../atoms";
 
+const isMobile = window.innerWidth <= 768;
+
 const Wrapper = styled.div`
   background-color: #ffffff;
 `;
@@ -10,12 +12,12 @@ const Header = styled.header``;
 
 const Footer = styled.footer`
   height: 60px;
+  background-color: #147b5c;
 `;
 
 const Section = styled.section`
   padding: ${({ padding }) => padding};
-  max-width: 1440px;
-  margin: auto;
+  min-height: ${isMobile ? "100%" : "calc(100vh - 300px)"};
 `;
 
 export const HomeTemplate = ({ header, children, footer, backgroundColor }) => (
