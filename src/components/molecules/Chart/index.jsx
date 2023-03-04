@@ -167,59 +167,59 @@ function BarChart({ chartData }) {
   // const others = sortedResult.slice(5, sortedResult.length);
 
   return (
-    <div>
-      <BarChartContainer>
-        {/* <h3>Top 5 parties</h3> */}
-        {sortedResult.map((item, index) => {
-          const percentageWidth = (item.score / totalVotes) * 100;
+    <BarChartContainer>
+      {/* <h3>Top 5 parties</h3> */}
+      {sortedResult.map((item, index) => {
+        const percentageWidth = (item.score / totalVotes) * 100;
 
-          return (
-            <BarContainer key={index}>
-              <BarLogo>
-                <Imgage src={item.icon} alt="" />
-                <PartyLabel>{item.party}</PartyLabel>
-              </BarLogo>
-              <Bar
-                width={percentageWidth ? percentageWidth : 0}
-                color={generateColor()}
-              />
-              <BarLabel>{`${item.score} votes`}</BarLabel>
-            </BarContainer>
-          );
-        })}
-      </BarChartContainer>
+        return (
+          <BarContainer key={index}>
+            <BarLogo>
+              <Imgage src={item.icon} alt="" />
+              <PartyLabel>{item.party}</PartyLabel>
+            </BarLogo>
+            <Bar
+              width={percentageWidth ? percentageWidth : 0}
+              color={generateColor()}
+            />
+            <BarLabel>{`${item.score} votes`}</BarLabel>
+          </BarContainer>
+        );
+      })}
+    </BarChartContainer>
+    // <div>
 
-      {/* <BarChartContainer>
-        <details closed>
-          <summary
-            style={{
-              fontSize: "1.2rem",
-              marginBottom: "20px",
-              fontWeight: "bold",
-            }}
-          >
-            View Others
-          </summary>
-          {others.map((item, index) => {
-            const percentageWidth = (item.score / totalVotes) * 100;
+    //   <BarChartContainer>
+    //     <details closed>
+    //       <summary
+    //         style={{
+    //           fontSize: "1.2rem",
+    //           marginBottom: "20px",
+    //           fontWeight: "bold",
+    //         }}
+    //       >
+    //         View Others
+    //       </summary>
+    //       {others.map((item, index) => {
+    //         const percentageWidth = (item.score / totalVotes) * 100;
 
-            return (
-              <BarContainer key={index}>
-                <BarLogo>
-                  <Imgage src={item.icon} alt="" />
-                  <PartyLabel>{item.party}</PartyLabel>
-                </BarLogo>
-                <Bar
-                  width={percentageWidth ? percentageWidth : 0}
-                  color={generateColor()}
-                />
-                <BarLabel>{`${item.score} votes`}</BarLabel>
-              </BarContainer>
-            );
-          })}
-        </details>
-      </BarChartContainer> */}
-    </div>
+    //         return (
+    //           <BarContainer key={index}>
+    //             <BarLogo>
+    //               <Imgage src={item.icon} alt="" />
+    //               <PartyLabel>{item.party}</PartyLabel>
+    //             </BarLogo>
+    //             <Bar
+    //               width={percentageWidth ? percentageWidth : 0}
+    //               color={generateColor()}
+    //             />
+    //             <BarLabel>{`${item.score} votes`}</BarLabel>
+    //           </BarContainer>
+    //         );
+    //       })}
+    //     </details>
+    //   </BarChartContainer>
+    // </div>
   );
 }
 
