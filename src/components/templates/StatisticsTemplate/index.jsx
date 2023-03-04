@@ -23,6 +23,8 @@ const Section = styled(Flex)`
   flex-direction: column;
   padding: ${({ padding }) => padding};
   min-height: ${isMobile ? "100%" : "calc(100vh - 120px)"};
+  max-width: 1440px;
+  margin: auto;
 `;
 
 export const StatisticsTemplate = ({

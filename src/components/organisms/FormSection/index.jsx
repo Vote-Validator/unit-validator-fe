@@ -26,6 +26,7 @@ import nnpcImg from "../../../assets/svgs/nnpp.svg";
 import { storeTranscribedDataAsync } from "../../../store/features/transcribe";
 import { toast } from "react-toastify";
 import { ComboBox } from "../../molecules";
+import { getAllowedParties } from "../../../utils/getAllowedParties";
 
 export const partiesInfo = [
   {
@@ -80,6 +81,7 @@ const addScoreKeyToPartyInfo = (parties) => {
     return {
       ...party,
       score: "",
+      is_not_signed: false,
     };
   });
 };
@@ -88,15 +90,16 @@ export const FormSection = ({ data }) => {
   // const [state, setState] = useState("");
   // const [lga, setLGA] = useState("");
   // const [pollingUnit, setPollingUnit] = useState("");
+  const ALLOWED_PARTIES = getAllowedParties(data.parties);
   const [isNotPresidentialForm, setIsNotPresidentialForm] = useState(false);
   const [isUnclear, setIsUnclear] = useState(false);
-  const [isNotSignedByAgent, setIsNotSignedByAgent] = useState(false);
+  // const [isNotSignedByAgent, setIsNotSignedByAgent] = useState(false);
   const [state, setState] = useState(null);
   const [lga, setLGA] = useState(null);
   const [pollingUnit, setPollingUnit] = useState(null);
   const [isFormCorrect, setIsFormCorrect] = useState(null);
   const [pollValues, setPollValues] = useState(
-    addScoreKeyToPartyInfo(data.parties)
+    addScoreKeyToPartyInfo(ALLOWED_PARTIES)
   );
 
   const [localGovernments, setLocalGovernments] = useState([]);
@@ -110,13 +113,21 @@ export const FormSection = ({ data }) => {
 
   const handleInputChange = (e) => {
     setPollValues((prev) => {
-      const partyIndex = pollValues.findIndex((party) => {
+      const partyIndex = prev.findIndex((party) => {
         return party.id + "" === e.target.name;
       });
       const newArray = [...prev];
       newArray[partyIndex].score = +e.target.value;
       return newArray;
     });
+  };
+
+  const handleSignedInputChange = async (e) => {
+    const partyIndex = pollValues.findIndex((party) => {
+      return party.id + "" === e.target.name;
+    });
+    pollValues[partyIndex].is_not_signed =
+      !pollValues[partyIndex].is_not_signed;
   };
 
   const handleStateChange = async (e, newValue) => {
@@ -151,9 +162,9 @@ export const FormSection = ({ data }) => {
     setIsUnclear((prev) => !prev);
   };
 
-  const handleisNotSignedByAgent = () => {
-    setIsNotSignedByAgent((prev) => !prev);
-  };
+  // const handleisNotSignedByAgent = () => {
+  //   setIsNotSignedByAgent((prev) => !prev);
+  // };
 
   const prepareSubmissionData = async () => {
     if (!state) {
@@ -172,7 +183,7 @@ export const FormSection = ({ data }) => {
           isFormCorrect === "true" || isFormCorrect === true ? true : false,
         is_unclear: isUnclear,
         is_invalid_form: isNotPresidentialForm,
-        is_not_signed: isNotSignedByAgent,
+        // is_not_signed: isNotSignedByAgent,
         parties: serializePartiesDataForSubmission(pollValues),
       };
 
@@ -198,15 +209,24 @@ export const FormSection = ({ data }) => {
     <>
       <PartiesInputSection>
         {pollValues.map((data, idx) => (
-          <VoteInput
-            type="number"
-            key={idx}
-            name={data.id}
-            partyName={data.name}
-            icon={data.icon}
-            value={data.score}
-            onChange={handleInputChange}
-          />
+          <div key={idx}>
+            <VoteInput
+              type="number"
+              keyValue={`${idx}-input`}
+              name={data.id}
+              partyName={data.name}
+              icon={data.icon}
+              value={data.score}
+              onChange={handleInputChange}
+            />
+            <CheckBox
+              keyValue={`${idx}-checkbox`}
+              name={data.id}
+              onChange={handleSignedInputChange}
+              label={`${data.name} representative did not signed this form.`}
+              value={data.score}
+            />
+          </div>
         ))}
       </PartiesInputSection>
 
@@ -240,12 +260,12 @@ export const FormSection = ({ data }) => {
             value={isUnclear}
             onChange={handleisUnclear}
           />
-          <CheckBox
+          {/* <CheckBox
             name="isNotSignedByAgent"
             label="This Document was not signed by an LP or PDP agent"
             value={isNotSignedByAgent}
             onChange={handleisNotSignedByAgent}
-          />
+          /> */}
         </div>
       </section>
 
