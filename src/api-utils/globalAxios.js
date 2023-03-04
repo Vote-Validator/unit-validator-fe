@@ -6,9 +6,9 @@ export const globalAxios = axios.create({
 });
 
 globalAxios.interceptors.request.use((config) => {
-  const token = localStorage.getItem("session_id");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  const session_id = localStorage.getItem("session_id");
+  if (session_id) {
+    config.data.session_id = session_id;
   }
 
   return config;

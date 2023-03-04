@@ -27,7 +27,7 @@ export const Header = ({ stats }) => {
         stats.data && (
           <ProgressBarContainer>
             <ProgressBar
-              value={stats?.data?.data?.statistics?.total_validated}
+              value={stats?.data?.data?.statistics?.total_results}
               total={stats?.data?.data?.statistics?.total_images}
             />
           </ProgressBarContainer>

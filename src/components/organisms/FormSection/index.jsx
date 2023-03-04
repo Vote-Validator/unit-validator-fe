@@ -93,7 +93,7 @@ export const FormSection = ({ data }) => {
   const ALLOWED_PARTIES = getAllowedParties(data.parties);
   const [isNotPresidentialForm, setIsNotPresidentialForm] = useState(false);
   const [isUnclear, setIsUnclear] = useState(false);
-  // const [isNotSignedByAgent, setIsNotSignedByAgent] = useState(false);
+  const [isNotStamped, setIsNotStamped] = useState(false);
   const [state, setState] = useState(null);
   const [lga, setLGA] = useState(null);
   const [pollingUnit, setPollingUnit] = useState(null);
@@ -162,9 +162,9 @@ export const FormSection = ({ data }) => {
     setIsUnclear((prev) => !prev);
   };
 
-  // const handleisNotSignedByAgent = () => {
-  //   setIsNotSignedByAgent((prev) => !prev);
-  // };
+  const handleisNotStamped = () => {
+    setIsNotStamped((prev) => !prev);
+  };
 
   const prepareSubmissionData = async () => {
     if (!state) {
@@ -183,7 +183,7 @@ export const FormSection = ({ data }) => {
           isFormCorrect === "true" || isFormCorrect === true ? true : false,
         is_unclear: isUnclear,
         is_invalid_form: isNotPresidentialForm,
-        // is_not_signed: isNotSignedByAgent,
+        is_not_stamped: isNotStamped,
         parties: serializePartiesDataForSubmission(pollValues),
       };
 
@@ -191,12 +191,7 @@ export const FormSection = ({ data }) => {
         storeTranscribedDataAsync(transcriptionData)
       );
       if (response.payload) {
-        // const resolveAfter2Sec = new Promise((resolve) =>
-        //   setTimeout(resolve, 2000)
-        // );
-        // await toast.promise(resolveAfter2Sec, {
-        //   success: "Data submitted successfully",
-        // });
+        localStorage.setItem("session_id", response.payload.session_id);
         toast.success("Data submitted successfully");
         reloadPage();
       } else {
@@ -250,7 +245,7 @@ export const FormSection = ({ data }) => {
           />
           <CheckBox
             name="isNotPresidentialForm"
-            label="This is not a Presidential form"
+            label="This is not a presidential form (it looks forged)"
             value={isNotPresidentialForm}
             onChange={handleisNotPresidentialForm}
           />
@@ -260,12 +255,12 @@ export const FormSection = ({ data }) => {
             value={isUnclear}
             onChange={handleisUnclear}
           />
-          {/* <CheckBox
-            name="isNotSignedByAgent"
-            label="This Document was not signed by an LP or PDP agent"
-            value={isNotSignedByAgent}
-            onChange={handleisNotSignedByAgent}
-          /> */}
+          <CheckBox
+            name="isNotStamped"
+            label="This form is not stamped"
+            value={isNotStamped}
+            onChange={handleisNotStamped}
+          />
         </div>
       </section>
 
