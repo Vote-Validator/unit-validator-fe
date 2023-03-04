@@ -6,8 +6,8 @@ import styled from "styled-components";
 // import Apgaimg from "./../../../assets/svgs/apga.svg";
 // import Lpimg from "./../../../assets/svgs/lp.svg";
 // import Nnppimg from "./../../../assets/svgs/nnpp.svg";
-import generateColor from "../../../utils/generateColor";
 import { getAllowedParties } from "../../../utils/getAllowedParties";
+import { getPartyColor } from "../../../utils/getPartyColor";
 // import { getAllowedParties } from "../../../utils/getAllowedParties";
 
 const BarChartContainer = styled.div`
@@ -180,7 +180,7 @@ function BarChart({ chartData }) {
             </BarLogo>
             <Bar
               width={percentageWidth ? percentageWidth : 0}
-              color={generateColor()}
+              color={getPartyColor(item.party)}
             />
             <BarLabel>{`${item.score} votes`}</BarLabel>
           </BarContainer>

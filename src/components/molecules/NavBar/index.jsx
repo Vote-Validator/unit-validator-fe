@@ -20,7 +20,7 @@ const Wrapper = styled(Flex)`
 
 export const NavBar = ({ justifyContent }) => {
   return (
-    <Wrapper justifyContent={justifyContent}>
+    <Wrapper justifyContent={justifyContent} className="container">
       <div>
         <LogoSvg width="32px" height="32px" />
       </div>

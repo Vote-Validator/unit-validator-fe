@@ -17,7 +17,7 @@ const ProgressBarContainer = styled.div`
 `;
 export const Header = ({ stats }) => {
   return (
-    <StyledHeaderWrapper>
+    <StyledHeaderWrapper className="container">
       <NavBar />
       {stats.isLoading ? (
         <Loader type="circle" />

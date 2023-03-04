@@ -15,8 +15,13 @@ const fetchResultsData = async (stateId) => {
 
 export const StatisticsPage = () => {
   const { stateId } = useParams();
-  const { data, isLoading, isError } = useQuery(["results", stateId], () =>
-    fetchResultsData(stateId)
+  const { data, isLoading, isError } = useQuery(
+    ["results", stateId],
+    () => fetchResultsData(stateId),
+    {
+      refetchInterval: false,
+      refetchOnMount: false,
+    }
   );
 
   return (
