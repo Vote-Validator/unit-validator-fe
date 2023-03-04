@@ -7,6 +7,7 @@ const ProgressWrapper = styled.div`
   border-radius: 50px;
   width: 100%;
   position: relative;
+  /* z-index: 999999; */
 `;
 const ProgressElement = styled.div`
   width: ${({ width }) => width};
