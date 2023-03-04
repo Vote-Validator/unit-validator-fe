@@ -35,7 +35,11 @@ export const StatisticsTemplate = ({
   <Wrapper>
     {header && <Header>{header}</Header>}
 
-    <Section padding="20px" backgroundColor={backgroundColor}>
+    <Section
+      className="container"
+      padding="20px"
+      backgroundColor={backgroundColor}
+    >
       {children}
     </Section>
 
