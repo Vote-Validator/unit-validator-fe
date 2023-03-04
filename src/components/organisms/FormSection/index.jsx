@@ -191,12 +191,7 @@ export const FormSection = ({ data }) => {
         storeTranscribedDataAsync(transcriptionData)
       );
       if (response.payload) {
-        // const resolveAfter2Sec = new Promise((resolve) =>
-        //   setTimeout(resolve, 2000)
-        // );
-        // await toast.promise(resolveAfter2Sec, {
-        //   success: "Data submitted successfully",
-        // });
+        localStorage.setItem("session_id", response.payload.session_id);
         toast.success("Data submitted successfully");
         reloadPage();
       } else {
