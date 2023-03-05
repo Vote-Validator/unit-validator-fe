@@ -28,11 +28,11 @@ export const ShowResults = ({ stats }) => {
       ) : (
         stats.data && (
           <SummaryText width="80%">
-            {stats?.data?.data?.statistics?.total_results} image(s) submitted so
-            far.{" "}
+            {stats?.data?.data?.statistics?.total_results} image(s) transcribed
+            so far.{" "}
             {stats?.data?.data?.statistics?.total_images -
               stats?.data?.data?.statistics?.total_results}{" "}
-            images not submitted yet
+            images not transcribed yet
           </SummaryText>
         )
       )}
