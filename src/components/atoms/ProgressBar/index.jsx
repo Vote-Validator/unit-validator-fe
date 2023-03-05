@@ -51,7 +51,7 @@ export const ProgressBar = ({ value, total }) => {
       <ProgressElement width={`${displayFigure}%`}>
         <StatusValueText {...innerTextProps}>{displayFigure}%</StatusValueText>
         <StatusValueText {...leftStatusTextProps} color="black">
-          {value} submitted
+          {value} transcribed
         </StatusValueText>
       </ProgressElement>
     </ProgressWrapper>
