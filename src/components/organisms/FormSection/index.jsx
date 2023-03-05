@@ -87,7 +87,7 @@ export const FormSection = ({ data }) => {
   // const [pollingUnit, setPollingUnit] = useState("");
   const ALLOWED_PARTIES = getAllowedParties(data.parties);
   const [isNotPresidentialForm, setIsNotPresidentialForm] = useState(false);
-  const [isUnclear, setIsUnclear] = useState(false);
+  // const [isUnclear, setIsUnclear] = useState(false);
   const [isNotStamped, setIsNotStamped] = useState(false);
   const [state, setState] = useState(null);
   const [lga, setLGA] = useState(null);
@@ -163,9 +163,9 @@ export const FormSection = ({ data }) => {
     setIsNotPresidentialForm((prev) => !prev);
   };
 
-  const handleisUnclear = () => {
-    setIsUnclear((prev) => !prev);
-  };
+  // const handleisUnclear = () => {
+  //   setIsUnclear((prev) => !prev);
+  // };
 
   const handleisNotStamped = () => {
     setIsNotStamped((prev) => !prev);
@@ -186,7 +186,7 @@ export const FormSection = ({ data }) => {
         image_id: data.image.id,
         has_corrections:
           isFormCorrect === "true" || isFormCorrect === true ? true : false,
-        is_unclear: isUnclear,
+        // is_unclear: isUnclear,
         is_invalid_form: isNotPresidentialForm,
         is_not_stamped: isNotStamped,
         parties: serializePartiesDataForSubmission(pollValues),
@@ -254,16 +254,16 @@ export const FormSection = ({ data }) => {
           />
           <CheckBox
             name="isNotPresidentialForm"
-            label="This is not a presidential form (it looks forged)"
+            label="This is not a presidential form"
             value={isNotPresidentialForm}
             onChange={handleisNotPresidentialForm}
           />
-          <CheckBox
+          {/* <CheckBox
             name="isUnclear"
             label="This document is unclear"
             value={isUnclear}
             onChange={handleisUnclear}
-          />
+          /> */}
           <CheckBox
             name="isNotStamped"
             label="This form is not stamped"

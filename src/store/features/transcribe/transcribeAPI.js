@@ -5,7 +5,7 @@ const storeTranscribedData = (data) => {
 };
 
 const markImageAsUnclear = (id) => {
-  return apiService(`/api/v1/transcribe/${id}/unclear`, "GET");
+  return apiService(`/api/v1/transcribe/image/${id}/unclear`, "GET");
 };
 
 const transcribeAPI = {
