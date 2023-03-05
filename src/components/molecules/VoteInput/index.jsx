@@ -45,8 +45,9 @@ export const VoteInput = ({
         type={type}
         name={name}
         id={name}
-        value={value}
+        value={value < 0 ? "" : value}
         onChange={onChange}
+        min="0"
       />
     </Flex>
   );
