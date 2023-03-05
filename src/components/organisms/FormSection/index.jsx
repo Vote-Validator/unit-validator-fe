@@ -112,7 +112,7 @@ export const FormSection = ({ data }) => {
         return party.id + "" === e.target.name;
       });
       const newArray = [...prev];
-      newArray[partyIndex].score = +e.target.value;
+      newArray[partyIndex].score = e.target.value ? +e.target.value : "";
       return newArray;
     });
   };
