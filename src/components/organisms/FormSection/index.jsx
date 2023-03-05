@@ -339,17 +339,34 @@ export const FormSection = ({ data }) => {
       </section>
 
       <Flex justifyContent="space-between">
-        <Button
+        {/* <Button
           onClick={markImageAsUnclear}
           backgroundColor="#C8C8C8"
           color="red"
           text="Unclear Image"
           margin="16px 0 0 0"
+        /> */}
+        <Button
+          onClick={prepareSubmissionData}
+          backgroundColor="#ededed"
+          text="SUBMIT"
+          margin="16px 0 0 0"
+        />
+      </Flex>
+
+      <Flex justifyContent="space-between" margin="20px 0">
+        <Button
+          onClick={markImageAsUnclear}
+          bgColor="#e74c3c"
+          color="#ffffff"
+          text="Unclear Image"
+          margin="16px 0 0 0"
         />
         <Button
           onClick={prepareSubmissionData}
-          backgroundColor="#C8C8C8"
-          text="SUBMIT"
+          bgColor="#e74c3c"
+          color="#ffffff"
+          text="Invalid Form"
           margin="16px 0 0 0"
         />
       </Flex>
