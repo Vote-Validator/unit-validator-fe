@@ -148,6 +148,7 @@ export const FormSection = ({ data }) => {
     const result = await dispatch(pollingUnitsAsync(newValue.id));
     if (result.payload) {
       setPollingUnits(result.payload);
+      // do polling unti preselection logic here and setPollingUnit here too
     }
   };
 
