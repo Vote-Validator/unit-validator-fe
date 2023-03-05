@@ -6,7 +6,7 @@ const ButtonWrapper = styled.button`
   border-radius: 0;
   cursor: pointer;
   padding: 12px 28px;
-  color: #5e5d5d;
+  color: ${({ color }) => color || "#5e5d5d"};
   border: 1px solid black;
   font-weight: bold;
   background-color: ${({ bgColor }) => bgColor};

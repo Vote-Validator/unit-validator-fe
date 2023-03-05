@@ -22,7 +22,10 @@ import adpImg from "../../../assets/svgs/adp.svg";
 import apgaImg from "../../../assets/svgs/apga.svg";
 import lpImg from "../../../assets/svgs/lp.svg";
 import nnpcImg from "../../../assets/svgs/nnpp.svg";
-import { storeTranscribedDataAsync } from "../../../store/features/transcribe";
+import {
+  markImageAsUnclearAsync,
+  storeTranscribedDataAsync,
+} from "../../../store/features/transcribe";
 import { toast } from "react-toastify";
 import { ComboBox } from "../../molecules";
 import { getAllowedParties } from "../../../utils/getAllowedParties";
@@ -127,6 +130,16 @@ export const FormSection = ({ data }) => {
     const result = await dispatch(getLocalGovernmentsAsync(newValue.id));
     if (result.payload) {
       setLocalGovernments(result.payload);
+    }
+  };
+
+  const markImageAsUnclear = async () => {
+    const response = await dispatch(markImageAsUnclearAsync(data.image.id));
+    if (response.payload) {
+      toast.success("Success");
+      reloadPage();
+    } else {
+      toast.error("Failed to mark image as unclear");
     }
   };
 
@@ -324,7 +337,14 @@ export const FormSection = ({ data }) => {
         </DroopdownWrapper>
       </section>
 
-      <Flex justifyContent="center">
+      <Flex justifyContent="space-between">
+        <Button
+          onClick={markImageAsUnclear}
+          backgroundColor="#C8C8C8"
+          color="red"
+          text="Unclear Image"
+          margin="16px 0 0 0"
+        />
         <Button
           onClick={prepareSubmissionData}
           backgroundColor="#C8C8C8"
