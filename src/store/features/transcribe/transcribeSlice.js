@@ -13,6 +13,14 @@ export const storeTranscribedDataAsync = createAsyncThunk(
   }
 );
 
+export const markImageAsUnclearAsync = createAsyncThunk(
+  "transcribe/unclear",
+  async (data) => {
+    const response = await transcribeAPI.markImageAsUnclear(data);
+    return response.data;
+  }
+);
+
 export const transcribeSlice = createSlice({
   name: "pollingUnits",
   initialState,
