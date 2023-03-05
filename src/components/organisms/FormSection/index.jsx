@@ -136,14 +136,10 @@ export const FormSection = ({ data }) => {
   const markImageAsUnclear = async () => {
     const response = await dispatch(markImageAsUnclearAsync(data.image.id));
     if (response.payload) {
-      toast.success("Fetching new image...", {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
+      toast.success("Fetching new image...");
       reloadPage();
     } else {
-      toast.error("Failed to mark image as unclear", {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
+      toast.error("Failed to mark image as unclear");
     }
   };
 
