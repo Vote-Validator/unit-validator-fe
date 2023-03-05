@@ -7,6 +7,7 @@ const ProgressWrapper = styled.div`
   border-radius: 50px;
   width: 100%;
   position: relative;
+  /* z-index: 999999; */
 `;
 const ProgressElement = styled.div`
   width: ${({ width }) => width};
@@ -50,7 +51,7 @@ export const ProgressBar = ({ value, total }) => {
       <ProgressElement width={`${displayFigure}%`}>
         <StatusValueText {...innerTextProps}>{displayFigure}%</StatusValueText>
         <StatusValueText {...leftStatusTextProps} color="black">
-          {value} validated
+          {value} submitted
         </StatusValueText>
       </ProgressElement>
     </ProgressWrapper>

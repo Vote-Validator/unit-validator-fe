@@ -12,7 +12,7 @@ import { Loader } from "../../atoms/Loader";
 import ReactPanZoom from "react-image-pan-zoom-rotate";
 
 const ContentWrapper = styled(Flex)`
-  padding: 30px;
+  padding: 30px 0;
   gap: 1em;
   @media only screen and (${screen.sm}) {
     display: block;
@@ -21,7 +21,7 @@ const ContentWrapper = styled(Flex)`
 `;
 const RightContent = styled(Flex)`
   width: 70%;
-  padding: 0 1.5em;
+  padding: 0 1.5em 0 0;
   border-right: 1px solid #e5e2ed;
   justify-content: center;
   align-items: center;
@@ -33,6 +33,12 @@ const RightContent = styled(Flex)`
 `;
 const LeftContent = styled(Flex)`
   width: 30%;
+  min-height: 60px;
+  /* max-height: 70vh;
+  overflow: auto;
+  padding-right: 6px;
+  padding-bottom: 60px;
+ */
 
   @media only screen and (${screen.sm}) {
     padding: 30px 0;

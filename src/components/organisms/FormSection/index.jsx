@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { CustomScrollBar } from "../../atoms/CustomScrollBar";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { getLocalGovernmentsAsync } from "../../../store/features/localGovernment";
@@ -23,7 +22,10 @@ import adpImg from "../../../assets/svgs/adp.svg";
 import apgaImg from "../../../assets/svgs/apga.svg";
 import lpImg from "../../../assets/svgs/lp.svg";
 import nnpcImg from "../../../assets/svgs/nnpp.svg";
-import { storeTranscribedDataAsync } from "../../../store/features/transcribe";
+import {
+  markImageAsUnclearAsync,
+  storeTranscribedDataAsync,
+} from "../../../store/features/transcribe";
 import { toast } from "react-toastify";
 import { ComboBox } from "../../molecules";
 import { getAllowedParties } from "../../../utils/getAllowedParties";
@@ -67,14 +69,7 @@ export const partiesInfo = [
 const DroopdownWrapper = styled.div`
   margin-bottom: 10px;
 `;
-const PartiesInputSection = styled.section`
-  min-height: 60px;
-  max-height: 60vh;
-  overflow: auto;
-  padding-right: 6px;
-
-  ${CustomScrollBar};
-`;
+const PartiesInputSection = styled.section``;
 const addScoreKeyToPartyInfo = (parties) => {
   const newParties = [...parties];
   return newParties?.map((party) => {
@@ -92,7 +87,7 @@ export const FormSection = ({ data }) => {
   // const [pollingUnit, setPollingUnit] = useState("");
   const ALLOWED_PARTIES = getAllowedParties(data.parties);
   const [isNotPresidentialForm, setIsNotPresidentialForm] = useState(false);
-  const [isUnclear, setIsUnclear] = useState(false);
+  // const [isUnclear, setIsUnclear] = useState(false);
   const [isNotStamped, setIsNotStamped] = useState(false);
   const [state, setState] = useState(null);
   const [lga, setLGA] = useState(null);
@@ -101,7 +96,7 @@ export const FormSection = ({ data }) => {
   const [pollValues, setPollValues] = useState(
     addScoreKeyToPartyInfo(ALLOWED_PARTIES)
   );
-
+  const session_id = localStorage.getItem("session_id");
   const [localGovernments, setLocalGovernments] = useState([]);
   const [pollingUnits, setPollingUnits] = useState([]);
 
@@ -138,6 +133,16 @@ export const FormSection = ({ data }) => {
     }
   };
 
+  const markImageAsUnclear = async () => {
+    const response = await dispatch(markImageAsUnclearAsync(data.image.id));
+    if (response.payload) {
+      toast.success("Success");
+      reloadPage();
+    } else {
+      toast.error("Failed to mark image as unclear");
+    }
+  };
+
   const handleLGAChange = async (e, newValue) => {
     setLGA(newValue);
     const result = await dispatch(pollingUnitsAsync(newValue.id));
@@ -158,9 +163,9 @@ export const FormSection = ({ data }) => {
     setIsNotPresidentialForm((prev) => !prev);
   };
 
-  const handleisUnclear = () => {
-    setIsUnclear((prev) => !prev);
-  };
+  // const handleisUnclear = () => {
+  //   setIsUnclear((prev) => !prev);
+  // };
 
   const handleisNotStamped = () => {
     setIsNotStamped((prev) => !prev);
@@ -181,17 +186,21 @@ export const FormSection = ({ data }) => {
         image_id: data.image.id,
         has_corrections:
           isFormCorrect === "true" || isFormCorrect === true ? true : false,
-        is_unclear: isUnclear,
+        // is_unclear: isUnclear,
         is_invalid_form: isNotPresidentialForm,
         is_not_stamped: isNotStamped,
         parties: serializePartiesDataForSubmission(pollValues),
       };
 
+      if (session_id) transcriptionData.session_id = session_id;
+
       const response = await dispatch(
         storeTranscribedDataAsync(transcriptionData)
       );
       if (response.payload) {
-        localStorage.setItem("session_id", response.payload.session_id);
+        if (!session_id)
+          localStorage.setItem("session_id", response.payload.session_id);
+
         toast.success("Data submitted successfully");
         reloadPage();
       } else {
@@ -245,16 +254,16 @@ export const FormSection = ({ data }) => {
           />
           <CheckBox
             name="isNotPresidentialForm"
-            label="This is not a presidential form (it looks forged)"
+            label="This is not a presidential form"
             value={isNotPresidentialForm}
             onChange={handleisNotPresidentialForm}
           />
-          <CheckBox
+          {/* <CheckBox
             name="isUnclear"
             label="This document is unclear"
             value={isUnclear}
             onChange={handleisUnclear}
-          />
+          /> */}
           <CheckBox
             name="isNotStamped"
             label="This form is not stamped"
@@ -328,7 +337,14 @@ export const FormSection = ({ data }) => {
         </DroopdownWrapper>
       </section>
 
-      <Flex justifyContent="center">
+      <Flex justifyContent="space-between">
+        <Button
+          onClick={markImageAsUnclear}
+          backgroundColor="#C8C8C8"
+          color="red"
+          text="Unclear Image"
+          margin="16px 0 0 0"
+        />
         <Button
           onClick={prepareSubmissionData}
           backgroundColor="#C8C8C8"

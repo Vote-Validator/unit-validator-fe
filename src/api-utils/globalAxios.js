@@ -6,11 +6,6 @@ export const globalAxios = axios.create({
 });
 
 globalAxios.interceptors.request.use((config) => {
-  const session_id = localStorage.getItem("session_id");
-  if (session_id) {
-    config.data.session_id = session_id;
-  }
-
   return config;
 });
 
