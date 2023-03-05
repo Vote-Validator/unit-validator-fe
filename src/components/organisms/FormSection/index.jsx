@@ -136,10 +136,14 @@ export const FormSection = ({ data }) => {
   const markImageAsUnclear = async () => {
     const response = await dispatch(markImageAsUnclearAsync(data.image.id));
     if (response.payload) {
-      toast.success("Success");
+      toast.success("Fetching new image...", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
       reloadPage();
     } else {
-      toast.error("Failed to mark image as unclear");
+      toast.error("Failed to mark image as unclear", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
     }
   };
 
@@ -148,6 +152,7 @@ export const FormSection = ({ data }) => {
     const result = await dispatch(pollingUnitsAsync(newValue.id));
     if (result.payload) {
       setPollingUnits(result.payload);
+      // do polling unti preselection logic here and setPollingUnit here too
     }
   };
 
